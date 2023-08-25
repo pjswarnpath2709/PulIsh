@@ -23,4 +23,9 @@ app.use(
   })
 );
 
+//importing routes
+import user from "./routes/user.js"
+//using routes
+app.use("/api/v1", user);
+
 export default app;
