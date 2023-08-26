@@ -3,7 +3,7 @@ const errorHandler = (err, req, res, next) => {
   err.message = err.message ?? "Internal server error";
   console.log("\x1b[33m", "😤😫🤯 :", err);
   res.json({
-    message: err,
+    message: err.message,
     statusCode: err.statusCode,
     success: "false",
   });
