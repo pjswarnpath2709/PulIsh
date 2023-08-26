@@ -7,13 +7,13 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: [true, "plesse enter your email"],
+        required: [true, "please enter your email"],
         unique: [true, "email already exists"]
     },
     password: {
         type: String,
-        required: [true, "plese enter password"],
-        minLength: [8, "password must be atleast of 6 characters"]
+        required: [true, "please enter password"],
+        minLength: [6, "password must be atleast of 6 characters"]
     },
     avatar: {
         public_id: String,

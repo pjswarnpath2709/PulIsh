@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 config({ path: "./configs/config.env" });
 
-// all imports
+//  import middlewares
 import express from "express";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
@@ -24,8 +24,13 @@ app.use(
 );
 
 //importing routes
-import user from "./routes/user.js"
+import user from "./routes/user.js";
+import errorHandler from "./middlewares/errorHandler.js";
+
 //using routes
 app.use("/api/v1", user);
+
+// error handler middleware
+app.use(errorHandler);
 
 export default app;
