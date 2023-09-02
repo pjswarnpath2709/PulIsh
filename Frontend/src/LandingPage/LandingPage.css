@@ -6,6 +6,7 @@ header {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     padding: 0 2rem;
+    margin-bottom: 4rem;
 }
 
 nav {
@@ -22,7 +23,7 @@ nav {
 }
 
 .logo>span {
-    color: rgb(140, 128, 218);
+    color: rgb(121, 109, 203);
 }
 
 .menu>a {
@@ -200,7 +201,7 @@ nav {
     height: 0.3rem;
     width: 7rem;
     border-radius: 2rem;
-    background-color: #5c6ac4;
+    background-color: rgb(121, 109, 203);
 }
 
 .services-upper p {
@@ -269,4 +270,371 @@ nav {
     color: #777;
     /* Description text color */
     margin-top: 10px;
+}
+
+/* Styles for the testimonial section */
+
+#testimonial {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 6rem 1.5rem;
+}
+
+.para {
+    width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.para>img {
+    width: 3rem;
+}
+
+@media (min-width:1024px) {
+    .para {
+        width: 75%;
+    }
+}
+
+@media (min-width: 1280px) {
+    .para {
+        width: 60%;
+    }
+
+    .para>img {
+        width: 4rem;
+    }
+}
+
+.main-para {
+    padding-top: 2rem;
+    font-size: 1.125rem;
+    line-height: 2rem;
+    color: rgb(100 116 139);
+}
+
+.para>h2 {
+    padding-top: 2rem;
+    padding-bottom: .3rem;
+    color: rgb(17 24 39);
+    font-size: 1.2rem;
+    letter-spacing: 5px;
+}
+
+/* Styles for the About Us section */
+
+#about-us {
+    margin: 0 auto;
+    padding: 6rem 2rem;
+}
+
+.about-us-content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.about-us-left {
+    width: 100%;
+    padding-bottom: 3rem;
+}
+
+.about-us-right {
+    width: 100%;
+}
+
+@media (min-width:1024px) {
+    .about-us-left {
+        width: 50%;
+    }
+
+    .about-us-right {
+        padding-left: 3rem;
+        width: 50%;
+    }
+}
+
+.about-us-left>img {
+    width: 100%;
+    height: 100%;
+}
+
+.about-us-right>h2 {
+    font-size: 4rem;
+    font-family: 'roboto';
+    padding-bottom: .3rem;
+}
+
+@media (max-width : 325px) {
+    .about-us-right>h2 {
+        font-size: 3rem;
+    }
+}
+
+.about-us-right>h3 {
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-family: 'roboto';
+    color: rgb(61, 69, 80);
+    padding-bottom: 1rem;
+}
+
+.about-us-right ul {
+    padding-left: 1rem;
+}
+
+.about-us-right li {
+    font-size: 1.125rem;
+    line-height: 2rem;
+    color: rgb(100 116 139);
+    margin-bottom: 1rem
+}
+
+#contact-us {
+    margin: 0 auto;
+    padding: 6rem 2rem;
+}
+
+.contact-us-upper {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.contact-us-upper h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.contact-us-upper p {
+    color: rgb(100 116 139);
+    line-height: 1.5rem;
+    font-family: 'roboto';
+    font-size: 1.2rem;
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media (min-width:640px) {
+    .contact-us-upper h1 {
+        font-size: 3rem;
+    }
+}
+
+@media (min-width:1024px) {
+    .contact-us-upper p {
+        width: 66.666%;
+    }
+}
+
+.contact-us-lower {
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media (min-width:786px) {
+    .contact-us-lower {
+        width: 66.666%;
+    }
+}
+
+@media (min-width:1024px) {
+    .contact-us-lower {
+        width: 50%;
+    }
+}
+
+.contact-form {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.contact-name {
+    padding: .5rem;
+    width: 50%;
+}
+
+.contact-name>div {
+    font-size: 1.2rem;
+    font-weight: bold;
+    line-height: 1.75rem;
+    color: rgb(100 116 139);
+    font-family: 'roboto';
+}
+
+.contact-name>input {
+    padding: .65rem 1rem;
+    width: 100%;
+    border: 1px solid #ccc;
+    /* Thin border all sides */
+    border-radius: 4px;
+    background: transparent;
+    transition: border-color 0.3s ease;
+}
+
+.contact-name>input:focus {
+    border-color: #4f46e5;
+}
+
+.contact-email {
+    padding: .5rem;
+    width: 50%;
+}
+
+.contact-email>div {
+    font-size: 1.2rem;
+    font-weight: bold;
+    line-height: 1.75rem;
+    color: rgb(100 116 139);
+    font-family: 'roboto';
+}
+
+.contact-email>input {
+    padding: .65rem 1rem;
+    width: 100%;
+    border: 1px solid #ccc;
+    /* Thin border all sides */
+    border-radius: 4px;
+    background: transparent;
+    transition: border-color 0.3s ease;
+}
+
+.contact-email>input:focus {
+    border-color: #4f46e5;
+}
+
+.contact-message {
+    margin-top: 1rem;
+    width: 100%;
+    padding: .5rem;
+}
+
+.contact-message>div {
+    font-size: 1.2rem;
+    font-weight: bold;
+    line-height: 1.75rem;
+    color: rgb(100 116 139);
+    font-family: 'roboto';
+}
+
+.contact-message>textarea {
+    padding: .65rem 1rem;
+    width: 100%;
+    border: 1px solid #ccc;
+    /* Thin border all sides */
+    border-radius: 4px;
+    background: transparent;
+    transition: border-color 0.3s ease;
+}
+
+.contact-btn {
+    padding: .5rem;
+    width: 100%;
+}
+
+.contact-btn>button {
+    display: flex;
+    margin: 0 auto;
+    color: white;
+    background-color: rgb(121, 109, 203);
+    padding: .7rem 3rem;
+    border: none;
+    border-radius: 4px;
+}
+
+.contact-btn>button:hover {
+    background-color: rgb(111, 99, 185);
+}
+
+.contact-border {
+    display: flex;
+    margin: 0 auto;
+    margin-top: 1.5rem;
+    border: none;
+    /* Remove the default border */
+    background-color: #f0f0f0;
+    /* Background color for the element */
+    box-shadow: 0 0 0.5px 0.4px #ccc;
+}
+
+#footer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+@media (min-width:640px) {
+    #footer {
+        flex-direction: row;
+    }
+}
+
+.footer-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 2rem;
+    color: black;
+}
+
+@media (min-width:1024px) {
+    .footer-title {
+        justify-content: start;
+    }
+}
+
+.footer-title>span {
+    color: rgb(121, 109, 203);
+}
+
+.footer-para {
+    font-size: 1rem;
+    color: #777;
+    margin-top: 1.2rem;
+}
+
+.footer-para>a {
+    text-decoration: none;
+    font-size: 1rem;
+    color: #777;
+    margin-top: 1.2rem;
+}
+
+@media (min-width:640px) {
+    .footer-para {
+        margin-left: 1rem;
+        padding-left: 1rem;
+        border-left: 2px 1px #e2e8f0;
+        border-color: #e2e8f0;
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+        margin-top: 0;
+    }
+}
+
+.footer-para>a {
+    color: #777;
+    margin-left: .2rem;
+}
+
+.footer-socials {
+    display: inline-flex;
+    margin-top: 1.4rem;
+    justify-content: center;
+}
+
+@media (min-width:640px) {
+    .footer-socials {
+        margin-top: 0;
+        justify-content: start;
+        margin-left: auto;
+    }
+}
+
+.footer-socials>a {
+    margin-left: 1.5rem;
 }
