@@ -235,13 +235,13 @@ const LandingPage = () => {
             <a href="" style={{ marginLeft: "0" }}>
               <img src={meta} alt="" />
             </a>
-            <a>
+            <a href="">
               <img src={x} alt="" />
             </a>
-            <a>
+            <a href="">
               <img src={insta} alt="" />
             </a>
-            <a>
+            <a href="">
               <img src={linkedin} alt="" />
             </a>
           </span>
