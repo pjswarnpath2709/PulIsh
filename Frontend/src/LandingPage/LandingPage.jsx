@@ -44,7 +44,7 @@ const LandingPage = () => {
                 <a href="">About Us</a>
                 <a href="">Contact Us</a>
               </div>
-              <div className="btn">
+              <div className="nav-btn">
                 <a href="">Get Started</a>
               </div>
             </>
