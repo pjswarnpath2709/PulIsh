@@ -1,6 +1,7 @@
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import Home from "./Components/Home/Home";
 import Login from "./Components/Login/Login";
 import Home from "./Components/Home/Home";
 import Register from "./Components/Register/Register";
