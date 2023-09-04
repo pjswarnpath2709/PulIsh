@@ -1,11 +1,26 @@
 import "./Register.css";
 import { TextField } from "@mui/material";
 import loginImg from "../../images/Login.svg";
+import { useState } from "react";
+import { registerUser } from "../../redux/actions /authAction";
+import { useDispatch } from "react-redux";
 
 const Register = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    if (name === "" || email === "" || password === "") return;
+    dispatch(registerUser({ name, email, password }));
+    setEmail("");
+    setPassword("");
+    setName("");
+  };
   return (
     <>
-      <section className="container">
+      <section className="container" onSubmit={onSubmitHandler}>
         <div className="card">
           <div className="media">
             <img src={loginImg} alt="" />
@@ -22,6 +37,8 @@ const Register = () => {
                 name="username"
                 autoComplete="username"
                 size="small"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
               <TextField
                 variant="outlined"
@@ -32,6 +49,8 @@ const Register = () => {
                 name="email"
                 autoComplete="email"
                 size="small"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
                 variant="outlined"
@@ -43,6 +62,8 @@ const Register = () => {
                 id="password"
                 autoComplete="current-password"
                 size="small"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <button type="submit" className="btn">
                 Sign Up

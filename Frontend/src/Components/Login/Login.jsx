@@ -1,7 +1,17 @@
 import "./Login.css";
 import { TextField } from "@mui/material";
 import loginImg from "../../images/Login.svg";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../redux/actions /authAction";
 const LoginFormWithImage = () => {
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    dispatch(loginUser({ email, password }));
+  };
   return (
     <section className="container">
       <div className="card">
@@ -10,12 +20,14 @@ const LoginFormWithImage = () => {
         </div>
         <div className="form">
           <div className="label">Login</div>
-          <form>
+          <form onSubmit={onSubmitHandler}>
             <TextField
               variant="outlined"
               margin="normal"
               fullWidth
               id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               label="Email"
               name="email"
               autoComplete="email"
@@ -27,6 +39,8 @@ const LoginFormWithImage = () => {
               name="password"
               label="Password"
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               id="password"
               autoComplete="current-password"
             />
