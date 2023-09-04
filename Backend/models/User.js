@@ -1,27 +1,33 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
+import validator from "validator";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "please enter your name"],
+import crypto from "crypto";
+const userSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "please enter your name"],
+    },
+    email: {
+      type: String,
+      required: [true, "please enter your email"],
+      unique: true,
+      validate: validator.isEmail,
+    },
+    password: {
+      type: String,
+      required: [true, "please enter your password"],
+      minLength: [6, "Password must be of 6 characters"],
+      select: false,
+    },
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
   },
-  email: {
-    type: String,
-    required: [true, "please enter your email"],
-    unique: [true, "email already exists"],
-  },
-  password: {
-    type: String,
-    required: [true, "please enter password"],
-    minLength: [6, "password must be atleast of 6 characters"],
-  },
-  avatar: {
-    public_id: String,
-    url: String,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 // User Methods
 userSchema.pre("save", async function (next) {
@@ -38,5 +44,15 @@ userSchema.methods.comparePassword = async function (providedPassword) {
   return await bcrypt.compare(providedPassword, this.password);
 };
 
-const User = mongoose.model("User", userSchema);
+userSchema.methods.getResetToken = async function () {
+  const resetToken = crypto.randomBytes(20).toString("hex");
+  this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+  this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+  await this.save();
+  return resetToken;
+};
+const User = model("User", userSchema);
 export default User;
