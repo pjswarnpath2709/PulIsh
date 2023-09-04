@@ -61,6 +61,15 @@ export const logout = catchAsyncErrors(async (req, res) => {
     });
 });
 
+export const getUserDetails = catchAsyncErrors(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  res.status(201).json({
+    success: true,
+    user: user,
+    message: "user details fetched successfully",
+  });
+});
+
 export const forgetPassword = catchAsyncErrors(async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
@@ -76,24 +85,58 @@ export const forgetPassword = catchAsyncErrors(async (req, res) => {
 });
 
 export const resetPassword = catchAsyncErrors(async (req, res) => {
-    const { token } = req.params;
-    const resetPasswordToken = crypto
-      .createHash("sha256")
-      .update(token)
-      .digest("hex");
-    const user = await User.findOne({
-      resetPasswordToken,
-      resetPasswordExpire: {
-        $gt: Date.now(),
-      },
-    });
-    if (!user) throw new CustomError(AuthErrors.TokenInvalidOrExpired);
-    user.password = req.body.password;
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpire = undefined;
-    await user.save();
-    res.status(200).json({
-      success: true,
-      message: "password reset successfully",
-    });
+  const { token } = req.params;
+  const resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(token)
+    .digest("hex");
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: {
+      $gt: Date.now(),
+    },
   });
+  if (!user) throw new CustomError(AuthErrors.TokenInvalidOrExpired);
+  user.password = req.body.password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+  await user.save();
+  res.status(200).json({
+    success: true,
+    message: "password reset successfully",
+  });
+});
+
+export const updateProfile = catchAsyncErrors(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  await user.updateOne({ $set: req.body });
+  await user.save();
+  res.status(201).json({
+    message: "details updated successfully",
+    success: true,
+  });
+});
+
+export const changePassword = catchAsyncErrors(async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  if (oldPassword === newPassword) {
+    throw new CustomError({
+      message: "old and new password are same",
+      statusCode: 400,
+    });
+  }
+  const user = await User.findById(req.user._id);
+  const isMatch = await user.comparePassword(oldPassword);
+  if (!isMatch) {
+    throw new CustomError({
+      message: "Invalid email or password",
+      statusCode: 401,
+    });
+  }
+  user.password = newPassword;
+  await user.save();
+  res.status(200).json({
+    message: "password updated successfully",
+    success: true,
+  });
+});

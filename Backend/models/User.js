@@ -19,7 +19,11 @@ const userSchema = new Schema(
       type: String,
       required: [true, "please enter your password"],
       minLength: [6, "Password must be of 6 characters"],
-      select: false,
+    },
+    subscribed: {
+      type: Boolean,
+      default: false,
+      required: true,
     },
     resetPasswordToken: String,
     resetPasswordExpire: Date,

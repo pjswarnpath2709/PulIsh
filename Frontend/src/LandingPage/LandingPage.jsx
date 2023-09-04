@@ -11,6 +11,7 @@ import meta from "../images/meta.svg";
 import x from "../images/x.svg";
 import insta from "../images/insta.svg";
 import linkedin from "../images/linkedin.svg";
+import { Link } from "react-router-dom";
 
 const LandingPage = () => {
   const [hamburger, setHamburger] = useState(window.innerWidth <= 640);
@@ -45,7 +46,7 @@ const LandingPage = () => {
                 <a href="">Contact Us</a>
               </div>
               <div className="nav-btn">
-                <a href="">Get Started</a>
+                <Link to="/login">Get Started</Link>
               </div>
             </>
           )}

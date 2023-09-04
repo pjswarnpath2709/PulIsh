@@ -1,0 +1,147 @@
+/* ProfileCustom.css */
+
+.profile-container {
+  background-color: #f0f4f8;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.user-info {
+  margin-top: 20px;
+}
+
+.profile-image-button {
+  background-color: #3498db;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.name {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.idd {
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+}
+
+.idd1-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.idd1 {
+  font-size: 12px;
+}
+
+.copy-icon {
+  cursor: pointer;
+}
+
+.follower-container {
+  margin-top: 20px;
+}
+
+.number {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.follow {
+  font-size: 12px;
+  font-weight: 500;
+  color: #444444;
+}
+
+.edit-profile-button-container {
+  margin-top: 20px;
+}
+
+.edit-profile-button {
+  background-color: #000;
+  color: #aeaeae;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.social-icons span {
+  font-size: 19px;
+}
+
+.join-date {
+  background-color: #ccc;
+  margin-top: 20px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.join {
+  font-size: 14px;
+  color: #a0a0a0;
+  font-weight: bold;
+}
+
+
+/* ProfileForm.css */
+
+.profile-form-container {
+  text-align: center;
+}
+
+.profile-form {
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f0f4f8;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.profile-form-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.profile-form-button {
+  background-color: #000;
+  color: #aeaeae;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.profile-form-button:hover {
+  background-color: #333;
+}
