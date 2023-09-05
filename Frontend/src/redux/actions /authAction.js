@@ -29,10 +29,9 @@ export const registerUser =
           withCredentials: true,
         }
       );
-      console.log("\x1b[35m", "👉👉👉 data :", data);
       dispatch(registerSuccess(data.user));
     } catch (err) {
-      dispatch(registerFail(err.response.data.errorMessage));
+      dispatch(registerFail(err.response.data.message));
     }
   };
 
@@ -51,7 +50,6 @@ export const loginUser =
           withCredentials: true,
         }
       );
-      console.log("\x1b[35m", "👉👉👉 data :", data);
       dispatch(loginSuccess(data));
     } catch (err) {
       dispatch(loginFail(err.response.data.message));
@@ -61,7 +59,12 @@ export const loginUser =
 export const logoutUser = () => async (dispatch) => {
   try {
     dispatch(logoutRequest());
-    const { data } = await pulishServer.get("/logout");
+    const { data } = await pulishServer.get("/logout", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    });
     dispatch(logoutSuccess(data));
   } catch (err) {
     dispatch(logoutFail(err.response.data.message));

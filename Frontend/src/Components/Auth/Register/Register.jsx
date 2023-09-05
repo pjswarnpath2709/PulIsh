@@ -1,9 +1,10 @@
 import "./Register.css";
 import { TextField } from "@mui/material";
-import loginImg from "../../images/Login.svg";
+import loginImg from "../../../images/Login.svg";
 import { useState } from "react";
-import { registerUser } from "../../redux/actions /authAction";
+import { registerUser } from "../../../redux/actions /authAction";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -70,7 +71,9 @@ const Register = () => {
               </button>
             </form>
             <div className="bottom">
-              <a href="">{"Already have an account ? SignIn."}</a>
+              <Link to={"/login"} replace href="">
+                {"Already have an account ? SignIn."}
+              </Link>
             </div>
           </div>
         </div>
