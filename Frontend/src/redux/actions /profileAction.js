@@ -1,5 +1,8 @@
 import pulishServer from "../api/pulishServer";
 import {
+  changePasswordFail,
+  changePasswordRequest,
+  changePasswordSuccess,
   forgotPasswordFail,
   forgotPasswordRequest,
   forgotPasswordSuccess,
@@ -46,5 +49,26 @@ export const resetPassword =
       dispatch(resetPasswordSuccess(data));
     } catch (err) {
       dispatch(resetPasswordFail(err.response.data.message));
+    }
+  };
+
+export const changePassword =
+  ({ oldPassword, newPassword }) =>
+  async (dispatch) => {
+    try {
+      dispatch(changePasswordRequest());
+      const { data } = await pulishServer.put(
+        `/user/changepassword`,
+        { oldPassword, newPassword },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      dispatch(changePasswordSuccess(data));
+    } catch (err) {
+      dispatch(changePasswordFail(err.response.data.message));
     }
   };

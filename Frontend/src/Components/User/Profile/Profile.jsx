@@ -3,6 +3,7 @@ import moment from "moment";
 import "./Profile.css";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Profile() {
   const { user } = useSelector((state) => state.auth);
@@ -71,13 +72,15 @@ function Profile() {
           </div>
         )}
 
-        {
-          <div className="edit-profile-button-container">
-            <button className="edit-profile-button" onClick={() => {}}>
-              Change Password
-            </button>
-          </div>
-        }
+        <div className="edit-profile-button-container">
+          <Link
+            style={{ textDecoration: "none" }}
+            to={"/changepassword"}
+            className="edit-profile-button"
+          >
+            Change Password
+          </Link>
+        </div>
 
         <div className="join-date">
           <p className="join">

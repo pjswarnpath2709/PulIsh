@@ -15,6 +15,7 @@ import { clearError, clearMessage } from "./redux/slices/authSlice";
 import Profile from "./Components/User/Profile/Profile";
 import ForgetPassword from "./Components/Auth/ForgotPassword/ForgotPassword";
 import ResetPassword from "./Components/Auth/ResetPassword/ResetPassword";
+import ChangePassword from "./Components/User/ChangePassword/ChangePassword";
 
 function App() {
   const { isAuth, loading, error, message } = useSelector(
@@ -53,8 +54,8 @@ function App() {
             }
           >
             <Route path="/profile" element={<Profile />} />
+            <Route path="/changepassword" element={<ChangePassword />} />
           </Route>
-
           {/* Add routes those are accessible when user is "not logged In", but not accessible when "user is logged In" here */}
           <Route
             element={
