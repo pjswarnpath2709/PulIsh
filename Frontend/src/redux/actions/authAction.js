@@ -29,7 +29,7 @@ export const registerUser =
           withCredentials: true,
         }
       );
-      dispatch(registerSuccess(data.user));
+      dispatch(registerSuccess(data));
     } catch (err) {
       dispatch(registerFail(err.response.data.message));
     }
