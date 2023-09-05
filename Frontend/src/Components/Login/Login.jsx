@@ -3,7 +3,7 @@ import { TextField } from "@mui/material";
 import loginImg from "../../../images/Login.svg";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../../../redux/actions /authAction";
+import { loginUser } from "../../redux/actions /authAction";
 import { Link } from "react-router-dom";
 const LoginFormWithImage = () => {
   const dispatch = useDispatch();

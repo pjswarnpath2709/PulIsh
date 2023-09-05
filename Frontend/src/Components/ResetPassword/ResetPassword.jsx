@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { clearError, clearMessage } from "../../../redux/slices/authSlice";
-import Loader from "../../Layouts/Loader/Loader";
-import { resetPassword } from "../../../redux/actions /profileAction";
+import { clearError, clearMessage } from "../../redux/slices/authSlice";
+import Loader from "../Loader/Loader";
+import { resetPassword } from "../../redux/actions /profileAction";
 
 const ResetPassword = () => {
   const { resetToken } = useParams();
