@@ -3,7 +3,6 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Home from "./Components/Home/Home";
 import Login from "./Components/Login/Login";
-import Home from "./Components/Home/Home";
 import Register from "./Components/Register/Register";
 import LandingPage from "./Components/LandingPage/LandingPage";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
