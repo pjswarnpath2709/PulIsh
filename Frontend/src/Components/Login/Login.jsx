@@ -1,6 +1,6 @@
 import "./Login.css";
 import { TextField } from "@mui/material";
-import loginImg from "../../../images/Login.svg";
+import loginImg from "../../images/Login.svg";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../redux/actions /authAction";

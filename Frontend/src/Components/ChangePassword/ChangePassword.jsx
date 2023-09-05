@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { clearError, clearMessage } from "../../redux/slices/profileSlice";
 import { changePassword } from "../../redux/actions /profileAction";
-import Loader from "../../Layouts/Loader/Loader";
+import Loader from "../Loader/Loader";
 
 const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");

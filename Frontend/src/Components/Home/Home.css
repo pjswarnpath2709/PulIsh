@@ -1,0 +1,4 @@
+/* Wrapper for the entire layout */
+.wrapper {
+    display: flex;
+}
