@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import NotFoundPage from "./Components/NotFoundPage/NotFoundPage";
 import { useEffect } from "react";
 import Loader from "./Components/Loader/Loader";
-import { loadUser } from "./redux/actions /authAction";
+import { loadUser } from "./redux/actions/authAction";
 import { clearError, clearMessage } from "./redux/slices/authSlice";
 import Profile from "./Components/Profile/Profile";
 import ForgetPassword from "./Components/ForgotPassword/ForgotPassword";

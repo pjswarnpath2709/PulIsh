@@ -2,7 +2,7 @@ import "./Register.css";
 import { TextField } from "@mui/material";
 import loginImg from "../../images/Login.svg";
 import { useState } from "react";
-import { registerUser } from "../../redux/actions /authAction";
+import { registerUser } from "../../redux/actions/authAction";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
