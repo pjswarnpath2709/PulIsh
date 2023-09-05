@@ -3,7 +3,7 @@ import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import CustomError from "../utils/CustomError.js";
 import cookieOptions from "../constants/cookieOptions.js";
 import sendEmail from "../utils/SendEmail.js";
-import { isEmailValid } from "../helper/checks.js";
+import { isEmailValid, isMissing } from "../helper/checks.js";
 import crypto from "crypto";
 
 export const register = catchAsyncErrors(async (req, res) => {
@@ -144,6 +144,11 @@ export const changePassword = catchAsyncErrors(async (req, res) => {
       statusCode: 400,
     });
   }
+  if (isMissing(oldPassword, newPassword))
+    throw new CustomError({
+      message: "Either Old Password or new Password is missing",
+      statusCode: 400,
+    });
   const user = await User.findById(req.user._id);
   const isMatch = await user.comparePassword(oldPassword);
   if (!isMatch) {
