@@ -6,7 +6,7 @@
     padding: 1rem;
 }
 
-header {
+.header {
     background: white;
     color: rgba(113, 99, 186, 255);
     padding: 10px 2rem;
@@ -68,56 +68,4 @@ header {
 
 .light-purple {
     background: rgb(254, 226, 254)
-}
-
-/* Tabular Section */
-.tabular-wrapper {
-    background: white;
-    margin-top: 1rem;
-    border-radius: 10px;
-    padding: 1rem;
-}
-
-.table-container {
-    width: 100%;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-thead {
-    background: rgba(113, 99, 186, 255);
-    color: white;
-}
-
-th {
-    padding: 15px;
-    text-align: left;
-}
-
-tbody {
-    background: #f2f2f2;
-}
-
-td {
-    padding: 15px;
-    font-size: 14px;
-    color: #333;
-}
-
-tr:nth-child(even) {
-    background: white;
-}
-
-tfoot {
-    padding: 15px;
-}
-
-.table-container button {
-    color: green;
-    border: none;
-    background: none;
-    cursor: pointer;
 }

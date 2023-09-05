@@ -1,15 +1,15 @@
 import "./DashBoard.css";
-
 import CurrencyRupeeRoundedIcon from "@mui/icons-material/CurrencyRupeeRounded";
 import TaskRoundedIcon from "@mui/icons-material/TaskRounded";
 import PendingActionsRoundedIcon from "@mui/icons-material/PendingActionsRounded";
 import AssignmentRoundedIcon from "@mui/icons-material/AssignmentRounded";
+import Table from "../Table/Table";
 
 const DashBoard = () => {
   return (
     <>
       <div className="main-content">
-        <header>
+        <header className="header">
           <h1>Dashboard</h1>
         </header>
         <main className="card-container">
@@ -88,63 +88,7 @@ const DashBoard = () => {
             </div>
           </div>
         </main>
-        <div className="tabular-wrapper">
-          <h3 className="main-title">Orders Data</h3>
-          <div className="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>S No.</th>
-                  <th>Cust. Name</th>
-                  <th>Problem</th>
-                  <th>Contact Number</th>
-                  <th>Model</th>
-                  <th>Amount</th>
-                  <th>Date</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Rohan</td>
-                  <td>display crack</td>
-                  <td>8498249284</td>
-                  <td>pixel 5</td>
-                  <td>300.00</td>
-                  <td>05-07-2023</td>
-                  <td>
-                    <button>Edit</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Rohan</td>
-                  <td>display crack</td>
-                  <td>8498249284</td>
-                  <td>pixel 5</td>
-                  <td>300.00</td>
-                  <td>05-07-2023</td>
-                  <td>
-                    <button>Edit</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Rohan</td>
-                  <td>display crack</td>
-                  <td>8498249284</td>
-                  <td>pixel 5</td>
-                  <td>300.00</td>
-                  <td>05-07-2023</td>
-                  <td>
-                    <button>Edit</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <Table height={"450px"} overflowY={"auto"} />
       </div>
     </>
   );
