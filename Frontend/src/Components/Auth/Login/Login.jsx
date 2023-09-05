@@ -1,9 +1,10 @@
 import "./Login.css";
 import { TextField } from "@mui/material";
-import loginImg from "../../images/Login.svg";
+import loginImg from "../../../images/Login.svg";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../../redux/actions /authAction";
+import { loginUser } from "../../../redux/actions /authAction";
+import { Link } from "react-router-dom";
 const LoginFormWithImage = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
@@ -45,16 +46,16 @@ const LoginFormWithImage = () => {
               autoComplete="current-password"
             />
             <div className="forgot">
-              <a href="">{"Forgot Password?"}</a>
+              <Link replace to={'/forgotpassword'} href="">{"Forgot Password?"}</Link>
             </div>
             <button type="submit" className="btn">
               Login
             </button>
           </form>
           <div style={{ textAlign: "center" }} className="bottom">
-            <a style={{ fontSize: ".8rem" }} href="">
+            <Link replace to={"/register"} style={{ fontSize: ".8rem" }} href="">
               {"Don't have an account ? SignUp."}
-            </a>
+            </Link>
           </div>
         </div>
       </div>

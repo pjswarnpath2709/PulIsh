@@ -9,7 +9,7 @@ const initialState = {
 };
 
 const authSlice = createSlice({
-  name: "userSlice",
+  name: "auth",
   initialState: initialState,
   reducers: {
     registerRequest: (state) => {
@@ -44,6 +44,7 @@ const authSlice = createSlice({
     logoutSuccess: (state, action) => {
       state.loading = false;
       state.message = action.payload.message;
+      state.user = null;
       state.isAuth = false;
     },
     logoutFail: (state, action) => {
