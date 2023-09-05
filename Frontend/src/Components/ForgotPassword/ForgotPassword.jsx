@@ -2,10 +2,10 @@ import { TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { forgotPassword } from "../../../redux/actions /profileAction";
+import { forgotPassword } from "../../redux/actions /profileAction";
 import { toast } from "react-toastify";
-import { clearError, clearMessage } from "../../../redux/slices/authSlice";
-import Loader from "../../Layouts/Loader/Loader";
+import { clearError, clearMessage } from "../../redux/slices/authSlice";
+import Loader from "../Loader/Loader";
 
 const ForgetPassword = () => {
   const dispatch = useDispatch();

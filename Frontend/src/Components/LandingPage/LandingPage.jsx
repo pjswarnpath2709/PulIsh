@@ -13,7 +13,7 @@ import insta from "../../../images/insta.svg";
 import linkedin from "../../../images/linkedin.svg";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../../../redux/actions /authAction";
+import { logoutUser } from "../../redux/actions /authAction";
 
 const LandingPage = () => {
   const { isAuth } = useSelector((state) => state.auth);
