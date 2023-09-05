@@ -1,28 +1,18 @@
 import "./LandingPage.css";
-import heroImg from "../../../images/hero1.gif";
+import heroImg from "../../images/hero1.gif";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { useEffect, useState } from "react";
-import service1 from "../../../images/website_builder.svg";
-import service2 from "../../../images/personal_website.svg";
-import service3 from "../../../images/cms.svg";
-import service4 from "../../../images/wordpress.svg";
-import quote from "../../../images/quote.svg";
-import meta from "../../../images/meta.svg";
-import x from "../../../images/x.svg";
-import insta from "../../../images/insta.svg";
-import linkedin from "../../../images/linkedin.svg";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../../redux/actions /authAction";
+import service1 from "../../images/website_builder.svg";
+import service2 from "../../images/personal_website.svg";
+import service3 from "../../images/cms.svg";
+import service4 from "../../images/wordpress.svg";
+import quote from "../../images/quote.svg";
+import meta from "../../images/meta.svg";
+import x from "../../images/x.svg";
+import insta from "../../images/insta.svg";
+import linkedin from "../../images/linkedin.svg";
 
 const LandingPage = () => {
-  const { isAuth } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
-
-  const logoutHandler = (e) => {
-    e.preventDefault();
-    dispatch(logoutUser());
-  };
   const [hamburger, setHamburger] = useState(window.innerWidth <= 640);
 
   useEffect(() => {
@@ -39,36 +29,32 @@ const LandingPage = () => {
 
   return (
     <>
-      <header>
-        <nav>
-          <a href="" className="logo">
+      <header className="lp-header">
+        <nav className="lp-nav">
+          <a href="" className="lp-logo">
             Pul<span>Ish</span>
           </a>
           {hamburger ? (
             <MenuRoundedIcon className="hamBurger" />
           ) : (
             <>
-              <div className="menu">
+              <div className="lp-menu">
                 <a href="">Home</a>
                 <a href="">Services</a>
                 <a href="">About Us</a>
                 <a href="">Contact Us</a>
               </div>
-              {!isAuth ? (
-                <div className="nav-btn">
-                  <Link to="/login">Get Started</Link>
-                </div>
-              ) : (
-                <div className="nav-btn">
-                  <a onClick={logoutHandler}>Logout</a>
-                </div>
-              )}
+              <div className="nav-btn">
+                <a href="">Get Started</a>
+              </div>
             </>
           )}
         </nav>
         <section className="hero">
           <div className="left">
-            <div style={{ fontWeight: "bolder" }}>{"We're "}</div>
+            <div style={{ fontWeight: "bolder", color: "black" }}>
+              {"We're "}
+            </div>
             <h1>Website builders</h1>
             <p
               style={{

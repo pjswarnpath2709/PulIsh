@@ -1,0 +1,83 @@
+.main-content {
+    position: relative;
+    background: #ebe9e9;
+    width: 100%;
+    padding: 1rem;
+}
+
+.order-header {
+    background: transparent;
+    padding: 8px 0rem;
+    border-radius: 10px;
+    margin-bottom: .8rem;
+}
+
+/* Card container */
+.card-container {
+    background: white;
+    padding: .8rem;
+    border-radius: 10px;
+}
+
+.card-container>h3 {
+    margin-bottom: .5rem;
+    font-family: "Roboto"
+}
+
+.card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.order-btn {
+    width: 9rem;
+    text-decoration: none;
+    background: rgba(113, 99, 186, 255);
+    padding: .5rem .5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: .8rem;
+    color: white;
+    border-radius: 8px;
+}
+
+.order-btn>span {
+    font-size: 1rem;
+    padding-right: .2rem;
+}
+
+
+.order-navigation {
+    display: flex;
+    color: black;
+}
+
+.category {
+    width: 4rem;
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    margin: 0 0.5rem;
+    font-size: .8rem;
+    letter-spacing: 2px;
+    flex: 1;
+    text-align: center;
+    padding-top: .4rem;
+    padding-bottom: .4rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    box-shadow: 0 2px 3px rgb(183, 183, 183);
+}
+
+.category.active {
+    background-color: rgba(113, 99, 186, 255);
+    color: white;
+}
+
+.category:hover {
+    background-color: rgb(123, 72, 200);
+    color: white;
+}

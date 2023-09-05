@@ -1,0 +1,111 @@
+/* Tabular Section */
+.tabular-wrapper {
+    background: white;
+    margin-top: 1rem;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.table-container {
+    width: 100%;
+}
+
+.table-main {
+    padding-bottom: .5rem;
+}
+
+.table-main>h3 {
+    font-size: 1rem;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: rgba(113, 99, 186, 255);
+    color: white;
+}
+
+th {
+    padding: 15px;
+    text-align: left;
+}
+
+tbody {
+    background: #f2f2f2;
+}
+
+td {
+    padding: 15px;
+    font-size: 14px;
+    color: #333;
+}
+
+tr:nth-child(even) {
+    background: white;
+}
+
+tfoot {
+    padding: 15px;
+}
+
+.table-container button {
+    color: green;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+
+/* Apply styles to the search container */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    margin: 8px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 1);
+}
+
+/* Style the search input */
+#search-bar {
+    flex: 1;
+    border: none;
+    padding: 8px;
+    width: 4rem;
+    border-radius: 30px 0 0 30px;
+    outline: none;
+}
+
+/* Style the search icon */
+#search-icon {
+    color: #fff;
+    border: none;
+    border-radius: 0 30px 30px 0;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+@media (max-width:558px) {}
+
+/* Adjust styles for smaller screens using media queries */
+@media (max-width: 768px) {}
+
+
+
+.menu-label {
+    font-size: .9rem;
+    margin-right: .5rem;
+    padding: .5rem;
+}
