@@ -29,16 +29,16 @@ const LandingPage = () => {
 
   return (
     <>
-      <header>
-        <nav>
-          <a href="" className="logo">
+      <header className="lp-header">
+        <nav className="lp-nav">
+          <a href="" className="lp-logo">
             Pul<span>Ish</span>
           </a>
           {hamburger ? (
             <MenuRoundedIcon className="hamBurger" />
           ) : (
             <>
-              <div className="menu">
+              <div className="lp-menu">
                 <a href="">Home</a>
                 <a href="">Services</a>
                 <a href="">About Us</a>
@@ -52,7 +52,9 @@ const LandingPage = () => {
         </nav>
         <section className="hero">
           <div className="left">
-            <div style={{ fontWeight: "bolder" }}>{"We're "}</div>
+            <div style={{ fontWeight: "bolder", color: "black" }}>
+              {"We're "}
+            </div>
             <h1>Website builders</h1>
             <p
               style={{
