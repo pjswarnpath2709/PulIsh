@@ -43,6 +43,17 @@ const profileSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    updateProfileRequest: (state) => {
+      state.loading = true;
+    },
+    updateProfileSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload.message;
+    },
+    updateProfileFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
     clearMessage: (state) => {
       state.message = null;
     },
@@ -62,6 +73,9 @@ export const {
   changePasswordFail,
   changePasswordRequest,
   changePasswordSuccess,
+  updateProfileRequest,
+  updateProfileSuccess,
+  updateProfileFail,
   clearError,
   clearMessage,
 } = profileSlice.actions;

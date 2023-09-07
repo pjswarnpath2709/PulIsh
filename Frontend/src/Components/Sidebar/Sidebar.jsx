@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import "./Sidebar.css";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/actions/authAction";
+// import { Link } from "react-router-dom";
 const Sidebar = ({ onButtonClick }) => {
   const [hamburger, setHamburger] = useState(window.innerWidth <= 930);
   const dispatch = useDispatch();
@@ -46,7 +47,6 @@ const Sidebar = ({ onButtonClick }) => {
           <ul className="menu">
             <li
               onClick={() => {
-                console.log("clicked dashboard");
                 onButtonClick("dashboard");
               }}
             >
@@ -61,8 +61,8 @@ const Sidebar = ({ onButtonClick }) => {
                 <span>Orders</span>
               </a>
             </li>
-            <li>
-              <a href="#">
+            <li onClick={() => onButtonClick("account")}>
+              <a href="#" to="/dashboard/profile">
                 <AccountBoxIcon />
                 <span>Account</span>
               </a>

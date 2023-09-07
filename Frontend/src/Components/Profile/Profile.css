@@ -1,81 +1,59 @@
 /* ProfileCustom.css */
 
 .profile-container {
-  background-color: #f0f4f8;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 400px;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
   text-align: center;
 }
 
 .user-info {
-  margin-top: 20px;
+  height: fit-content;
+  width: 60%;
+  background-color: #f0f4f8;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .profile-image-button {
   background-color: #3498db;
   border: none;
   border-radius: 50%;
-  padding: 10px;
+  padding: 5px;
   cursor: pointer;
 }
 
+.profile-image-button>img {
+  height: 4rem;
+  width: 4rem;
+}
+
 .name {
-  font-size: 22px;
+  font-size: 1rem;
   font-weight: bold;
-  margin-top: 15px;
+  padding-top: 0.6rem;
 }
 
 .idd {
-  font-size: 14px;
+  font-size: .9rem;
   font-weight: 600;
   color: #666;
 }
 
-.idd1-container {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: 10px;
-}
-
-.idd1 {
-  font-size: 12px;
-}
-
-.copy-icon {
-  cursor: pointer;
-}
-
-.follower-container {
-  margin-top: 20px;
-}
-
-.number {
-  font-size: 22px;
-  font-weight: bold;
-}
-
-.follow {
-  font-size: 12px;
-  font-weight: 500;
-  color: #444444;
-}
-
 .edit-profile-button-container {
-  margin-top: 20px;
+  margin-top: 1rem;
 }
 
 .edit-profile-button {
-  background-color: #000;
-  color: #aeaeae;
+  background-color: rgba(113, 99, 186, 255);
+  color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 6px 8px;
   cursor: pointer;
   border-radius: 5px;
-  font-size: 15px;
+  font-size: 11px;
   font-weight: bold;
   text-transform: uppercase;
 }
@@ -106,42 +84,12 @@
   font-weight: bold;
 }
 
+@media (max-width:499px) {
+  .user-info {
+    width: 90%;
+  }
 
-/* ProfileForm.css */
-
-.profile-form-container {
-  text-align: center;
-}
-
-.profile-form {
-  max-width: 300px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f0f4f8;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.profile-form-input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 12px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.profile-form-button {
-  background-color: #000;
-  color: #aeaeae;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 15px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.profile-form-button:hover {
-  background-color: #333;
+  .idd {
+    font-size: .7rem;
+  }
 }

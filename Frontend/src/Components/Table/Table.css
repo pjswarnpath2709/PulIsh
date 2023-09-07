@@ -52,6 +52,11 @@ tfoot {
     padding: 15px;
 }
 
+.order-icons {
+    display: flex;
+    gap: 1rem;
+}
+
 .table-container button {
     color: green;
     border: none;

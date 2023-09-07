@@ -55,7 +55,7 @@ function App() {
             }
           >
             <Route path="/dashboard" element={<Home />} />
-            <Route path="/profile" element={<Profile />} />
+            {/* <Route path="/dashboard/profile" element={<Profile />} /> */}
             <Route path="/changepassword" element={<ChangePassword />} />
           </Route>
           {/* Add routes those are accessible when user is "not logged In", but not accessible when "user is logged In" here */}

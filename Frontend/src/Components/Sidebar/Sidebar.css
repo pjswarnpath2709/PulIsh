@@ -74,6 +74,7 @@
     }
 
     .sidebar-menuicon {
+        min-height: 100vh;
         width: 5rem;
         background-color: rgba(113, 99, 186, 255);
     }

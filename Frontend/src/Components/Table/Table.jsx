@@ -12,6 +12,14 @@ import moment from "moment";
 import TableFilterMenu from "./TableFilterMenu";
 import TableSearchBar from "./TableSearchBar";
 import { setCurrentOrder } from "../../redux/slices/singleOrderSlice";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CheckIcon from "@mui/icons-material/Check";
+import {
+  clearError as SingleOrderClearError,
+  clearMessage as SingleOrderClearMessage,
+} from "../../redux/slices/singleOrderSlice";
+import { deleteOrder } from "../../redux/actions/singleOrderAction";
 
 // eslint-disable-next-line react/prop-types
 const Table = ({ height, overflowY }) => {
@@ -43,6 +51,21 @@ const Table = ({ height, overflowY }) => {
     }
   }, [error, dispatch]);
 
+  const { message: singleOrderMessage, error: sigleOrderError } = useSelector(
+    (state) => state.singleOrder
+  );
+  useEffect(() => {
+    const toastOptions = { position: "top-center" };
+    if (singleOrderMessage) {
+      toast.success(singleOrderMessage, toastOptions);
+      dispatch(SingleOrderClearMessage());
+      dispatch(getOrders({}));
+    }
+    if (sigleOrderError) {
+      toast.error(sigleOrderError, toastOptions);
+      dispatch(SingleOrderClearError());
+    }
+  }, [singleOrderMessage, sigleOrderError, dispatch]);
   if (loading) {
     return <Loader />;
   }
@@ -90,6 +113,7 @@ const TableWrapper = ({ children }) => {
           "Model",
           "Estimate Amount",
           "CreatedAt",
+          "Estimate Time",
           "Action",
         ]}
       />
@@ -116,6 +140,10 @@ const TableRow = ({ order, onClickButtonEdit }) => {
     dispatch(setCurrentOrder(order));
     onClickButtonEdit();
   };
+  const onClickDeleteOrder = () => {
+    dispatch(deleteOrder({ orderId: order._id }));
+    dispatch(getOrders({}));
+  };
   return (
     <tr>
       <td>{order?.customer?.name}</td>
@@ -124,8 +152,14 @@ const TableRow = ({ order, onClickButtonEdit }) => {
       <td>{order?.model}</td>
       <td>{order?.estimateAmount}</td>
       <td>{moment(new Date(order?.createdAt)).format("ll")}</td>
-      <td>
-        <button onClick={onClickButtonEditHandler}>Edit</button>
+      <td>{order?.estimateTime}</td>
+      <td className="order-icons">
+        <EditIcon
+          style={{ color: "gray" }}
+          onClick={onClickButtonEditHandler}
+        ></EditIcon>
+        <CheckIcon style={{ color: "#50C878" }} />
+        <DeleteIcon onClick={onClickDeleteOrder} style={{ color: "red" }} />
       </td>
     </tr>
   );

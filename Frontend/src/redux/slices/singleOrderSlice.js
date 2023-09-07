@@ -36,6 +36,17 @@ const singleOrderSlice = createSlice({
     setCurrentOrder: (state, action) => {
       state.order = action.payload;
     },
+    deleteOrderRequest: (state) => {
+      state.loading = true;
+    },
+    deleteOrderSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload.message;
+    },
+    deleteOrderFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload
+    },
     clearOrder: (state) => {
       state.order = initialState.order;
     },
@@ -55,6 +66,9 @@ export const {
   editOrderFail,
   editOrderRequest,
   editOrderSuccess,
+  deleteOrderRequest,
+  deleteOrderSuccess,
+  deleteOrderFail,
   clearError,
   clearMessage,
   clearOrder,

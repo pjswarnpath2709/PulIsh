@@ -1,11 +1,10 @@
 import { TextField } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createOrder } from "../../redux/actions/singleOrderAction";
 import { toast } from "react-toastify";
-import { clearError, clearMessage } from "../../redux/slices/singleOrderSlice";
-import { getOrders } from "../../redux/actions/ordersAction";
+// import { getOrders } from "../../redux/actions/ordersAction";
 const OrderForm = () => {
   const [customerName, setCustomerName] = useState("");
   const [problemStatement, setProblemStatement] = useState("");
@@ -14,14 +13,14 @@ const OrderForm = () => {
   const [estimateAmount, setEstimateAmount] = useState(0);
   const [estimateTime, setEstimateTime] = useState("");
   const dispatch = useDispatch();
-  const resetState = () => {
-    setCustomerContact("");
-    setCustomerName("");
-    setEstimateAmount(0);
-    setEstimateTime("");
-    setModel("");
-    setProblemStatement("");
-  };
+  // const resetState = () => {
+  //   setCustomerContact("");
+  //   setCustomerName("");
+  //   setEstimateAmount(0);
+  //   setEstimateTime("");
+  //   setModel("");
+  //   setProblemStatement("");
+  // };
   const createOrderHandler = () => {
     if (
       model === "" ||
@@ -45,20 +44,8 @@ const OrderForm = () => {
       })
     );
   };
-  const { loading, message, error } = useSelector((state) => state.singleOrder);
-  useEffect(() => {
-    const toastOptions = { position: "top-center" };
-    if (message) {
-      toast.success(message, toastOptions);
-      resetState();
-      dispatch(clearMessage());
-      dispatch(getOrders({}));
-    }
-    if (error) {
-      toast.error(error, toastOptions);
-      dispatch(clearError());
-    }
-  }, [message, error, dispatch]);
+  const { loading } = useSelector((state) => state.singleOrder);
+
   const numericPattern = /^[0-9]*$/; // Regular expression to match only numeric characters
 
   const handleInput = (event) => {
