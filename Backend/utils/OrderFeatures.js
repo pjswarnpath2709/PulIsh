@@ -33,9 +33,8 @@ class OrderApiFeature {
   filterByOrderStatus = ({ orderStatus }) => {
     if (isMissing(orderStatus)) return this;
     if (
-      !OrderStatusEnum.some((status) => {
-        return status === orderStatus;
-      })
+      orderStatus !== OrderStatusEnum.closed &&
+      orderStatus !== OrderStatusEnum.open
     )
       throw new CustomError({
         message: "Invalid Order Status",
@@ -47,7 +46,10 @@ class OrderApiFeature {
 
   filterByPaymentStatus = ({ paymentStatus }) => {
     if (isMissing(paymentStatus)) return this;
-    if (!PaymentStatusEnum.some((status) => status === paymentStatus))
+    if (
+      paymentStatus !== PaymentStatusEnum.done &&
+      paymentStatus !== PaymentStatusEnum.pending
+    )
       throw new CustomError({
         message: "Invalid Payment Status",
         statusCode: 400,
