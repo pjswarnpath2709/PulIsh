@@ -1,6 +1,9 @@
 import _ from "lodash";
 import pulishServer from "../api/pulishServer";
 import {
+  completeOrderFail,
+  completeOrderRequest,
+  completeOrderSuccess,
   createOrderFail,
   createOrderRequest,
   createOrderSuccess,
@@ -98,5 +101,20 @@ export const deleteOrder = ({ orderId }) => async (dispatch) => {
     dispatch(deleteOrderSuccess(data));
   } catch (err) {
     dispatch(deleteOrderFail(err.response.data.message));
+  }
+}
+
+export const completeOrder = ({ orderId }) => async (dispatch) => {
+  try {
+    dispatch(completeOrderRequest());
+    const { data } = await pulishServer.put(`/order/orderstatus/${orderId}`, {}, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    })
+    dispatch(completeOrderSuccess(data));
+  } catch (err) {
+    dispatch(completeOrderFail(err.response.data.message));
   }
 }

@@ -106,8 +106,10 @@ export const toggleOrderStatus = catchAsyncErrors(async (req, res) => {
     throw new CustomError({ message: "Order does'nt exists", statusCode: 404 });
   if (order.orderStatus === OrderStatusEnum.closed) {
     order.orderStatus = OrderStatusEnum.open;
+    order.closedAt = null;
   } else {
     order.orderStatus = OrderStatusEnum.closed;
+    order.closedAt = new Date(Date.now()).toISOString();
   }
   await order.save();
   res.status(201).json({

@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { clearError, clearMessage } from "../../redux/slices/profileSlice";
 import { changePassword } from "../../redux/actions/profileAction";
 import Loader from "../Loader/Loader";
+import "./ChangePassword.css";
 
 const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
@@ -59,9 +60,9 @@ const ChangePassword = () => {
   };
   if (loading) return <Loader />;
   return (
-    <section className="container">
-      <div className="form">
-        <div className="label">Change Password</div>
+    <section className="forgot-container">
+      <div className="forgot-form forgot-card">
+        <div className="forgot-label">Change Password</div>
         <form onSubmit={onSubmitHandler}>
           <TextField
             type="password"
@@ -96,7 +97,7 @@ const ChangePassword = () => {
             label="Confirm Password"
             name="comfirmpassword"
           />
-          <button type="submit" className="btn">
+          <button type="submit" className="forgot-btn">
             Change Password
           </button>
         </form>

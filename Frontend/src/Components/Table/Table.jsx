@@ -19,7 +19,10 @@ import {
   clearError as SingleOrderClearError,
   clearMessage as SingleOrderClearMessage,
 } from "../../redux/slices/singleOrderSlice";
-import { deleteOrder } from "../../redux/actions/singleOrderAction";
+import {
+  completeOrder,
+  deleteOrder,
+} from "../../redux/actions/singleOrderAction";
 
 // eslint-disable-next-line react/prop-types
 const Table = ({ height, overflowY }) => {
@@ -144,6 +147,10 @@ const TableRow = ({ order, onClickButtonEdit }) => {
     dispatch(deleteOrder({ orderId: order._id }));
     dispatch(getOrders({}));
   };
+  const onClickComplete = () => {
+    dispatch(completeOrder({ orderId: order._id }));
+    dispatch(getOrders({}));
+  };
   return (
     <tr>
       <td>{order?.customer?.name}</td>
@@ -158,7 +165,7 @@ const TableRow = ({ order, onClickButtonEdit }) => {
           style={{ color: "gray" }}
           onClick={onClickButtonEditHandler}
         ></EditIcon>
-        <CheckIcon style={{ color: "#50C878" }} />
+        <CheckIcon onClick={onClickComplete} style={{ color: "#50C878" }} />
         <DeleteIcon onClick={onClickDeleteOrder} style={{ color: "red" }} />
       </td>
     </tr>

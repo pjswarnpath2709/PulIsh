@@ -3,7 +3,6 @@ import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import LogoutIcon from "@mui/icons-material/Logout";
-import SettingsIcon from "@mui/icons-material/Settings";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { useEffect, useState } from "react";
 import "./Sidebar.css";
@@ -65,12 +64,6 @@ const Sidebar = ({ onButtonClick }) => {
               <a href="#" to="/dashboard/profile">
                 <AccountBoxIcon />
                 <span>Account</span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <SettingsIcon />
-                <span>Settings</span>
               </a>
             </li>
             <li className="logout">
