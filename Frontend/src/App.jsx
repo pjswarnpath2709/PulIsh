@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import NotFoundPage from "./Components/NotFoundPage/NotFoundPage";
 import { useEffect } from "react";
 import Loader from "./Components/Loader/Loader";
-import { loadUser} from './redux/actions/authAction'
+import { loadUser } from "./redux/actions/authAction";
 import { clearError, clearMessage } from "./redux/slices/authSlice";
 import Profile from "./Components/Profile/Profile";
 import ForgetPassword from "./Components/ForgotPassword/ForgotPassword";
@@ -44,8 +44,7 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/lp" element={<LandingPage />} />
+          <Route path="/" element={<LandingPage />} />
           {/* Add routes those are accessible when user is "logged In", but not accessible when "user is not logged In" here */}
           <Route
             element={
@@ -55,7 +54,8 @@ function App() {
               />
             }
           >
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/dashboard" element={<Home />} />
+            {/* <Route path="/dashboard/profile" element={<Profile />} /> */}
             <Route path="/changepassword" element={<ChangePassword />} />
           </Route>
           {/* Add routes those are accessible when user is "not logged In", but not accessible when "user is logged In" here */}
@@ -63,7 +63,7 @@ function App() {
             element={
               <ProtectedRoute
                 isAuthenticated={!isAuth}
-                authRouteRedirect={"/profile"}
+                authRouteRedirect={"/dashboard"}
               />
             }
           >

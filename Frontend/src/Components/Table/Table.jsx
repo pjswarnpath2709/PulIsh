@@ -1,20 +1,32 @@
+/* eslint-disable react/prop-types */
 import "./Table.css";
-import SortIcon from "@mui/icons-material/Sort";
-import {
-  Menu,
-  MenuItem,
-  // StyledInputBase,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import Modal from "../Modal/Modal";
-import Checkbox from "@mui/material/Checkbox";
+import { useDispatch, useSelector } from "react-redux";
+import { getOrders } from "../../redux/actions/ordersAction";
+import Loader from "../Loader/Loader";
+import { toast } from "react-toastify";
+import { clearError } from "../../redux/slices/ordersSlice";
+import moment from "moment";
+import TableFilterMenu from "./TableFilterMenu";
+import TableSearchBar from "./TableSearchBar";
+import { setCurrentOrder } from "../../redux/slices/singleOrderSlice";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CheckIcon from "@mui/icons-material/Check";
+import {
+  clearError as SingleOrderClearError,
+  clearMessage as SingleOrderClearMessage,
+} from "../../redux/slices/singleOrderSlice";
+import {
+  completeOrder,
+  deleteOrder,
+} from "../../redux/actions/singleOrderAction";
 
 // eslint-disable-next-line react/prop-types
 const Table = ({ height, overflowY }) => {
-  const [openDialog, setOpenDialog] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -22,276 +34,141 @@ const Table = ({ height, overflowY }) => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+  // orders handle logic here
+  const dispatch = useDispatch();
+  const { orders, loading, error, filters } = useSelector(
+    (state) => state.orders
+  );
+  useEffect(() => {
+    dispatch(getOrders({}));
+  }, [dispatch]);
 
-  const handleOpenMenu = (event) => {
-    setOpenDialog(event.currentTarget);
-  };
+  useEffect(() => {
+    dispatch(getOrders(filters));
+  }, [dispatch, filters]);
 
-  const handleCloseMenu = () => {
-    setOpenDialog(null);
-  };
+  useEffect(() => {
+    if (error) {
+      toast.error(error, { position: "top-center" });
+      dispatch(clearError());
+    }
+  }, [error, dispatch]);
 
-  const [searchText, setSearchText] = useState("");
+  const { message: singleOrderMessage, error: sigleOrderError } = useSelector(
+    (state) => state.singleOrder
+  );
+  useEffect(() => {
+    const toastOptions = { position: "top-center" };
+    if (singleOrderMessage) {
+      toast.success(singleOrderMessage, toastOptions);
+      dispatch(SingleOrderClearMessage());
+      dispatch(getOrders({}));
+    }
+    if (sigleOrderError) {
+      toast.error(sigleOrderError, toastOptions);
+      dispatch(SingleOrderClearError());
+    }
+  }, [singleOrderMessage, sigleOrderError, dispatch]);
+  if (loading) {
+    return <Loader />;
+  }
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    console.log("Searching for:", searchText);
-    setSearchText("");
-  };
   return (
     <>
-      <Modal open={isModalOpen} handleClose={closeModal} />
+      {isModalOpen && <Modal open={isModalOpen} handleClose={closeModal} />}
       <div className="tabular-wrapper">
         <div className="table-main">
           <h3>Orders Data</h3>
-          <div className="search-container">
-            <input type="text" id="search-bar" placeholder="Search..." />
-            <div id="search-icon">
-              <SearchIcon onClick={handleSearch} style={{ color: "gray" }} />
-            </div>
-          </div>
+          <TableSearchBar />
           <div style={{ display: "flex", justifyContent: "end" }}>
-            <SortIcon
-              onClick={handleOpenMenu}
-              style={{
-                width: "2rem",
-                height: "1.5rem",
-                boxShadow: "rgba(0, 0, 0, .3) 3px 3px 1px",
-                borderRadius: "4px",
-                color: "gray",
-                marginRight: "8px",
-              }}
-            />
+            <TableFilterMenu />
           </div>
-          <Menu
-            sx={{ mt: "45px" }}
-            id="menu-appbar"
-            anchorEl={openDialog}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            open={Boolean(openDialog)}
-            onClose={handleCloseMenu}
-          >
-            <MenuItem onClick={handleCloseMenu}>
-              <label className="menu-label" htmlFor="">
-                Start Date
-              </label>
-              <input
-                style={{ padding: ".4rem", borderRadius: "4px" }}
-                type="date"
-                required
-              />
-            </MenuItem>
-            <MenuItem onClick={handleCloseMenu}>
-              <label className="menu-label" htmlFor="">
-                End Date
-              </label>
-              <input
-                style={{ padding: ".4rem", borderRadius: "4px" }}
-                type="date"
-                required
-              />
-            </MenuItem>
-            <MenuItem>
-              <label className="menu-label" htmlFor="">
-                Payment Pending
-              </label>
-              <Checkbox />
-            </MenuItem>
-            <MenuItem>
-              <label className="menu-label" htmlFor="">
-                Payment Completed
-              </label>
-              <Checkbox />
-            </MenuItem>
-          </Menu>
         </div>
         <div
           style={{ height: `${height}`, overflowY: `${overflowY}` }}
           className="table-container"
         >
-          <table>
-            <thead>
-              <tr>
-                <th>S No.</th>
-                <th>Cust. Name</th>
-                <th>Problem</th>
-                <th>Contact Number</th>
-                <th>Model</th>
-                <th>Amount</th>
-                <th>Date</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Rohan</td>
-                <td>display crack</td>
-                <td>8498249284</td>
-                <td>pixel 5</td>
-                <td>300.00</td>
-                <td>05-07-2023</td>
-                <td>
-                  <button onClick={openModal}>Edit</button>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>Rohan</td>
-                <td>display crack</td>
-                <td>8498249284</td>
-                <td>pixel 5</td>
-                <td>300.00</td>
-                <td>05-07-2023</td>
-                <td>
-                  <button>Edit</button>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>Rohan</td>
-                <td>display crack</td>
-                <td>8498249284</td>
-                <td>pixel 5</td>
-                <td>300.00</td>
-                <td>05-07-2023</td>
-                <td>
-                  <button>Edit</button>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>Rohan</td>
-                <td>display crack</td>
-                <td>8498249284</td>
-                <td>pixel 5</td>
-                <td>300.00</td>
-                <td>05-07-2023</td>
-                <td>
-                  <button>Edit</button>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>Rohan</td>
-                <td>display crack</td>
-                <td>8498249284</td>
-                <td>pixel 5</td>
-                <td>300.00</td>
-                <td>05-07-2023</td>
-                <td>
-                  <button>Edit</button>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>Rohan</td>
-                <td>display crack</td>
-                <td>8498249284</td>
-                <td>pixel 5</td>
-                <td>300.00</td>
-                <td>05-07-2023</td>
-                <td>
-                  <button>Edit</button>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>Rohan</td>
-                <td>display crack</td>
-                <td>8498249284</td>
-                <td>pixel 5</td>
-                <td>300.00</td>
-                <td>05-07-2023</td>
-                <td>
-                  <button>Edit</button>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>Rohan</td>
-                <td>display crack</td>
-                <td>8498249284</td>
-                <td>pixel 5</td>
-                <td>300.00</td>
-                <td>05-07-2023</td>
-                <td>
-                  <button>Edit</button>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>Rohan</td>
-                <td>display crack</td>
-                <td>8498249284</td>
-                <td>pixel 5</td>
-                <td>300.00</td>
-                <td>05-07-2023</td>
-                <td>
-                  <button>Edit</button>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>Rohan</td>
-                <td>display crack</td>
-                <td>8498249284</td>
-                <td>pixel 5</td>
-                <td>300.00</td>
-                <td>05-07-2023</td>
-                <td>
-                  <button>Edit</button>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>Rohan</td>
-                <td>display crack</td>
-                <td>8498249284</td>
-                <td>pixel 5</td>
-                <td>300.00</td>
-                <td>05-07-2023</td>
-                <td>
-                  <button>Edit</button>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>Rohan</td>
-                <td>display crack</td>
-                <td>8498249284</td>
-                <td>pixel 5</td>
-                <td>300.00</td>
-                <td>05-07-2023</td>
-                <td>
-                  <button>Edit</button>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>Rohan</td>
-                <td>display crack</td>
-                <td>8498249284</td>
-                <td>pixel 5</td>
-                <td>300.00</td>
-                <td>05-07-2023</td>
-                <td>
-                  <button>Edit</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <TableWrapper>
+            {orders?.map((order, ind) => {
+              return (
+                <TableRow
+                  key={order._id + ind}
+                  order={order}
+                  onClickButtonEdit={openModal}
+                />
+              );
+            })}
+          </TableWrapper>
         </div>
       </div>
     </>
+  );
+};
+
+const TableWrapper = ({ children }) => {
+  return (
+    <table>
+      <TableHeader
+        headers={[
+          "Name",
+          "ProblemStatement",
+          "Contact Number",
+          "Model",
+          "Estimate Amount",
+          "CreatedAt",
+          "Estimate Time",
+          "Action",
+        ]}
+      />
+      <tbody>{children}</tbody>
+    </table>
+  );
+};
+
+const TableHeader = ({ headers }) => {
+  return (
+    <thead>
+      <tr>
+        {headers.map((header, ind) => (
+          <td key={ind}>{header}</td>
+        ))}
+      </tr>
+    </thead>
+  );
+};
+
+const TableRow = ({ order, onClickButtonEdit }) => {
+  const dispatch = useDispatch();
+  const onClickButtonEditHandler = () => {
+    dispatch(setCurrentOrder(order));
+    onClickButtonEdit();
+  };
+  const onClickDeleteOrder = () => {
+    dispatch(deleteOrder({ orderId: order._id }));
+    dispatch(getOrders({}));
+  };
+  const onClickComplete = () => {
+    dispatch(completeOrder({ orderId: order._id }));
+    dispatch(getOrders({}));
+  };
+  return (
+    <tr>
+      <td>{order?.customer?.name}</td>
+      <td>{order?.problemStatement}</td>
+      <td>{order?.customer?.contactNumber}</td>
+      <td>{order?.model}</td>
+      <td>{order?.estimateAmount}</td>
+      <td>{moment(new Date(order?.createdAt)).format("ll")}</td>
+      <td>{order?.estimateTime}</td>
+      <td className="order-icons">
+        <EditIcon
+          style={{ color: "gray" }}
+          onClick={onClickButtonEditHandler}
+        ></EditIcon>
+        <CheckIcon onClick={onClickComplete} style={{ color: "#50C878" }} />
+        <DeleteIcon onClick={onClickDeleteOrder} style={{ color: "red" }} />
+      </td>
+    </tr>
   );
 };
 

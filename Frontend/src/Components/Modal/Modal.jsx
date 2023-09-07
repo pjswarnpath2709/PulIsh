@@ -4,9 +4,43 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { clearOrder } from "../../redux/slices/singleOrderSlice";
+import { updateOrderDetails } from "../../redux/actions/singleOrderAction";
 
 // eslint-disable-next-line react/prop-types
 const Modal = ({ open, handleClose }) => {
+  const { order } = useSelector((state) => state.singleOrder);
+  const dispatch = useDispatch();
+  const [model, setModel] = useState(order?.model);
+  const [problem, setProblem] = useState(order?.problemStatement);
+  const [amount, setAmount] = useState(order?.estimateAmount);
+  const [estimateTime, setEstimateTime] = useState(order?.estimateTime);
+
+  const onSaveButtonHandler = () => {
+    dispatch(
+      updateOrderDetails(
+        { orderId: order?._id },
+        {
+          estimateAmount: amount,
+          estimateTime: estimateTime,
+          model: model,
+          problemStatement: problem,
+        }
+      )
+    );
+    dispatch(clearOrder());
+    handleClose();
+  };
+  const onCancelButtonHandler = () => {
+    dispatch(clearOrder());
+    handleClose();
+  };
+  if (!order) {
+    dispatch(clearOrder());
+    handleClose();
+  }
   return (
     <>
       <Dialog open={open} onClose={handleClose}>
@@ -20,6 +54,8 @@ const Modal = ({ open, handleClose }) => {
             }}
             size="small"
             required
+            value={order?.customer?.name}
+            disabled
             id="name"
             label="Name"
           />
@@ -29,6 +65,8 @@ const Modal = ({ open, handleClose }) => {
               marginBottom: "1rem",
               marginTop: "1rem",
             }}
+            value={problem}
+            onChange={(e) => setProblem(e.target.value)}
             size="small"
             required
             id="problem"
@@ -40,6 +78,8 @@ const Modal = ({ open, handleClose }) => {
               marginBottom: "1rem",
               marginTop: "1rem",
             }}
+            value={order?.customer?.contactNumber}
+            disabled
             size="small"
             required
             id="mobile"
@@ -51,6 +91,8 @@ const Modal = ({ open, handleClose }) => {
               marginBottom: "1rem",
               marginTop: "1rem",
             }}
+            value={model}
+            onChange={(e) => setModel(e.target.value)}
             size="small"
             required
             id="model"
@@ -62,6 +104,8 @@ const Modal = ({ open, handleClose }) => {
               marginBottom: "1rem",
               marginTop: "1rem",
             }}
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
             size="small"
             required
             id="amount"
@@ -75,13 +119,15 @@ const Modal = ({ open, handleClose }) => {
             }}
             size="small"
             required
+            value={estimateTime}
+            onChange={(e) => setEstimateTime(e.target.value)}
             id="date"
             label="Date"
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Save</Button>
+          <Button onClick={onCancelButtonHandler}>Cancel</Button>
+          <Button onClick={onSaveButtonHandler}>Save</Button>
         </DialogActions>
       </Dialog>
     </>

@@ -1,8 +1,8 @@
 import mongoose, { Schema } from "mongoose";
 
-export const OrderStatusEnum = ["open", "closed"];
+export const OrderStatusEnum = { open: "open", closed: "closed" };
 
-export const PaymentStatusEnum = ["done", "pending"];
+export const PaymentStatusEnum = { done: "done", pending: "pending" };
 
 const OrderSchema = new mongoose.Schema(
   {
@@ -24,13 +24,13 @@ const OrderSchema = new mongoose.Schema(
     },
     orderStatus: {
       type: String,
-      default: "open",
-      enum: OrderStatusEnum,
+      default: OrderStatusEnum.open,
+      enum: [OrderStatusEnum.open, OrderStatusEnum.closed],
     },
     payment: {
       type: String,
-      default: "pending",
-      enum: PaymentStatusEnum,
+      default: PaymentStatusEnum.pending,
+      enum: [PaymentStatusEnum.pending, PaymentStatusEnum.done],
     },
     customer: {
       type: Schema.Types.ObjectId,
