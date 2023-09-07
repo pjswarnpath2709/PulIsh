@@ -12,7 +12,6 @@ import SortIcon from "@mui/icons-material/Sort";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilterOptions } from "../../redux/actions/ordersAction";
-import { Delete } from "@mui/icons-material";
 
 const TableFilterMenu = () => {
   const [openDialog, setOpenDialog] = useState(null);
@@ -24,7 +23,6 @@ const TableFilterMenu = () => {
   const handleCloseMenu = () => {
     setOpenDialog(null);
   };
-  const currentDate = new Date().toISOString().split("T")[0];
   return (
     <>
       <SortIcon
@@ -100,7 +98,6 @@ const TableFilterMenu = () => {
               name="paymentStatus"
               value={filters.payment === null ? "null" : filters.payment}
               onChange={(e) => {
-                console.log("PaymentStatus", e.target.value);
                 dispatch(
                   setFilterOptions({
                     payment: e.target.value === "null" ? null : e.target.value,

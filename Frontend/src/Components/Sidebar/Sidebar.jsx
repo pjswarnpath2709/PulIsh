@@ -1,81 +1,90 @@
-/* eslint-disable react/prop-types */
+// /* eslint-disable react/prop-types */
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./Sidebar.css";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/actions/authAction";
-// import { Link } from "react-router-dom";
-const Sidebar = ({ onButtonClick }) => {
-  const [hamburger, setHamburger] = useState(window.innerWidth <= 930);
+
+import { NavLink, Outlet } from "react-router-dom";
+import "./Sidebar.css";
+// eslint-disable-next-line react/prop-types
+const Sidebar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
+
   const dispatch = useDispatch();
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logoutUser());
   };
-  useEffect(() => {
-    const handleResize = () => {
-      setHamburger(window.innerWidth <= 930);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const menuItem = [
+    {
+      path: "/dashboard",
+      name: "Dashboard",
+      icon: <SpaceDashboardIcon />,
+    },
+    {
+      path: "/dashboard/orders",
+      name: "Orders",
+      icon: <AssignmentIcon />,
+    },
+    {
+      path: "/dashboard/profile",
+      name: "Account",
+      icon: <AccountBoxIcon />,
+    },
+  ];
   return (
-    <>
-      {hamburger ? (
-        <div className="sidebar-menuicon">
-          <MenuRoundedIcon
-            style={{
-              margin: "auto",
-              marginTop: "1rem",
-              display: "flex",
-              color: "white",
-            }}
-          />
+    <div className="sidebar-container">
+      <div style={{ width: isOpen ? "200px" : "50px" }} className="sidebar">
+        <div className="sidebar-top_section">
+          <h1
+            style={{ display: isOpen ? "block" : "none" }}
+            className="sidebar-logo"
+          >
+            Pulish
+          </h1>
+          <div
+            style={{ marginLeft: isOpen ? "50px" : "0px" }}
+            className="sidebar-bars"
+          >
+            <MenuRoundedIcon onClick={toggle} />
+          </div>
         </div>
-      ) : (
-        <nav className="sidebar">
-          <div className="logo">PulIsh</div>
-          <ul className="menu">
-            <li
-              onClick={() => {
-                onButtonClick("dashboard");
-              }}
+        {menuItem.map((item, index) => (
+          <NavLink
+            to={item.path}
+            key={index}
+            className="sidebar-link"
+            activeclassname="sidebar-active"
+          >
+            <div className="sidebar-icon">{item.icon}</div>
+            <div
+              style={{ display: isOpen ? "block" : "none" }}
+              className="sidebar-link_text"
             >
-              <a href="#">
-                <SpaceDashboardIcon />
-                <span>Dashboard</span>
-              </a>
-            </li>
-            <li onClick={() => onButtonClick("orders")}>
-              <a href="#">
-                <AssignmentIcon />
-                <span>Orders</span>
-              </a>
-            </li>
-            <li onClick={() => onButtonClick("account")}>
-              <a href="#" to="/dashboard/profile">
-                <AccountBoxIcon />
-                <span>Account</span>
-              </a>
-            </li>
-            <li className="logout">
-              <a onClick={handleLogout} href="#">
-                <LogoutIcon />
-                <span>Logout</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      )}
-    </>
+              {item.name}
+            </div>
+          </NavLink>
+        ))}
+        <div
+          className="sidebar-link"
+          style={{ cursor: "pointer" }}
+          onClick={handleLogout}
+        >
+          <LogoutIcon />
+          <div className="sidebar-link_text">Logout</div>
+        </div>
+      </div>
+
+      <div className="sidebar-main">
+        <Outlet />
+      </div>
+    </div>
   );
 };
 
