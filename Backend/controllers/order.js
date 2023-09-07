@@ -4,7 +4,6 @@ import CustomError from "../utils/CustomError.js";
 import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import Order from "../models/Order.js";
 import OrderApiFeature from "../utils/OrderFeatures.js";
-import sendEmail from "../utils/SendEmail.js";
 
 export const createOrder = catchAsyncErrors(async (req, res) => {
   const {
@@ -34,7 +33,10 @@ export const createOrder = catchAsyncErrors(async (req, res) => {
   }
 
   // check if the customer already present in the database
-  let customer = await Customer.findOne({ contactNumber: customerContact });
+  let customer = await Customer.findOne({
+    name: customerName,
+    contactNumber: customerContact,
+  });
   if (!customer) {
     // if the customer is not already present create one
     customer = new Customer({
@@ -76,7 +78,7 @@ export const deleteOrder = catchAsyncErrors(async (req, res) => {
 
 export const updateOrder = catchAsyncErrors(async (req, res) => {
   const { orderId } = req.params;
-  const order = await Order.findById(orderId);
+  const order = await Order.findById(orderId).populate("customer");
   if (!order) {
     throw new CustomError({ message: "Invalid OrderId", statusCode: 400 });
   }
@@ -85,7 +87,7 @@ export const updateOrder = catchAsyncErrors(async (req, res) => {
   await order.updateOne({ $set: req.body });
   res.status(201).json({
     success: true,
-    message: "order updated successfully",
+    message: `${order.customer.name}'s order: ${order._id} updated successfully`,
   });
 });
 
@@ -128,7 +130,7 @@ export const getOrderById = catchAsyncErrors(async (req, res) => {
   if (!order) {
     throw new CustomError({ message: "Invalid orderId", statusCode: 404 });
   }
-  
+
   res.status(200).json({
     order,
     success: true,

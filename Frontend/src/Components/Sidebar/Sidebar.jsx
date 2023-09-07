@@ -7,9 +7,15 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { useEffect, useState } from "react";
 import "./Sidebar.css";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../redux/actions/authAction";
 const Sidebar = ({ onButtonClick }) => {
   const [hamburger, setHamburger] = useState(window.innerWidth <= 930);
-
+  const dispatch = useDispatch();
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(logoutUser());
+  };
   useEffect(() => {
     const handleResize = () => {
       setHamburger(window.innerWidth <= 930);
@@ -68,7 +74,7 @@ const Sidebar = ({ onButtonClick }) => {
               </a>
             </li>
             <li className="logout">
-              <a href="#">
+              <a onClick={handleLogout} href="#">
                 <LogoutIcon />
                 <span>Logout</span>
               </a>

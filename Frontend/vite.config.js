@@ -3,6 +3,9 @@ import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    "process.env.DISABLE_VUE_DEVTOOLS": "true", // Disable Vue Devtools warnings
+  },
   plugins: [react()],
   server: {
     proxy: {

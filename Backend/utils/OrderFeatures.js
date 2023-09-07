@@ -9,6 +9,7 @@ class OrderApiFeature {
   }
 
   search = async ({ searchTerm }) => {
+    if (typeof searchTerm === "string" && searchTerm.trim() === "") return this;
     const regex = new RegExp(searchTerm, "i");
     if (isMissing(searchTerm)) {
       return this;
