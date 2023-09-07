@@ -1,7 +1,6 @@
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import Home from "./Components/Home/Home";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import LandingPage from "./Components/LandingPage/LandingPage";
@@ -17,6 +16,9 @@ import Profile from "./Components/Profile/Profile";
 import ForgetPassword from "./Components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./Components/ResetPassword/ResetPassword";
 import ChangePassword from "./Components/ChangePassword/ChangePassword";
+import Sidebar from "./Components/Sidebar/Sidebar";
+import DashBoard from "./Components/DashBoard/DashBoard";
+import Order from "./Components/Order/Order";
 
 function App() {
   const { isAuth, loading, error, message } = useSelector(
@@ -45,7 +47,6 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          {/* Add routes those are accessible when user is "logged In", but not accessible when "user is not logged In" here */}
           <Route
             element={
               <ProtectedRoute
@@ -54,11 +55,13 @@ function App() {
               />
             }
           >
-            <Route path="/dashboard" element={<Home />} />
-            {/* <Route path="/dashboard/profile" element={<Profile />} /> */}
-            <Route path="/changepassword" element={<ChangePassword />} />
+            <Route path="/dashboard" element={<Sidebar />}>
+              <Route index element={<DashBoard />} />
+              <Route path="orders" element={<Order />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="changepassword" element={<ChangePassword />} />
+            </Route>
           </Route>
-          {/* Add routes those are accessible when user is "not logged In", but not accessible when "user is logged In" here */}
           <Route
             element={
               <ProtectedRoute
@@ -74,9 +77,8 @@ function App() {
               path="/resetpassword/:resetToken"
               element={<ResetPassword />}
             />
+            <Route path="/*" element={<NotFoundPage />} />
           </Route>
-          <Route path="/register" element={<Register />} />
-          <Route path="/*" element={<NotFoundPage />} />
         </Routes>
       </Router>
       <ToastContainer />

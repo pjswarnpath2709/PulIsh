@@ -35,7 +35,6 @@ export const setFilterOptions =
       if (orderStatus !== undefined) {
         filtersToUpdate = { ...filtersToUpdate, orderStatus };
       }
-      console.log("\x1b[35m", "👉👉👉 filtersToUpdate :", filtersToUpdate);
       dispatch(updateFilters(filtersToUpdate));
     };
 
