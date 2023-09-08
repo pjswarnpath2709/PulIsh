@@ -4,7 +4,7 @@ import "./Table.css";
 import { useEffect, useState } from "react";
 import Modal from "../Modal/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders } from "../../redux/actions/ordersAction";
+import { getOrders, setFilterOptions } from "../../redux/actions/ordersAction";
 import Loader from "../Loader/Loader";
 import { toast } from "react-toastify";
 import { clearError } from "../../redux/slices/ordersSlice";
@@ -15,14 +15,16 @@ import { setCurrentOrder } from "../../redux/slices/singleOrderSlice";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   clearError as SingleOrderClearError,
   clearMessage as SingleOrderClearMessage,
 } from "../../redux/slices/singleOrderSlice";
 import {
-  completeOrder,
+  toggleOrderStatus,
   deleteOrder,
 } from "../../redux/actions/singleOrderAction";
+import { Button } from "@mui/material";
 
 // eslint-disable-next-line react/prop-types
 const Table = ({ height, overflowY }) => {
@@ -36,9 +38,8 @@ const Table = ({ height, overflowY }) => {
   };
   // orders handle logic here
   const dispatch = useDispatch();
-  const { orders, loading, error, filters } = useSelector(
-    (state) => state.orders
-  );
+  const { orders, loading, error, filters, currentPage, totalPages } =
+    useSelector((state) => state.orders);
   useEffect(() => {
     dispatch(getOrders({}));
   }, [dispatch]);
@@ -54,7 +55,7 @@ const Table = ({ height, overflowY }) => {
     }
   }, [error, dispatch]);
 
-  const { message: singleOrderMessage, error: sigleOrderError } = useSelector(
+  const { message: singleOrderMessage, error: singleOrderError } = useSelector(
     (state) => state.singleOrder
   );
   useEffect(() => {
@@ -62,13 +63,13 @@ const Table = ({ height, overflowY }) => {
     if (singleOrderMessage) {
       toast.success(singleOrderMessage, toastOptions);
       dispatch(SingleOrderClearMessage());
-      dispatch(getOrders({}));
+      dispatch(getOrders(filters));
     }
-    if (sigleOrderError) {
-      toast.error(sigleOrderError, toastOptions);
+    if (singleOrderError) {
+      toast.error(singleOrderError, toastOptions);
       dispatch(SingleOrderClearError());
     }
-  }, [singleOrderMessage, sigleOrderError, dispatch]);
+  }, [singleOrderMessage, singleOrderError, dispatch, filters]);
   if (loading) {
     return <Loader />;
   }
@@ -99,6 +100,30 @@ const Table = ({ height, overflowY }) => {
               );
             })}
           </TableWrapper>
+        </div>
+        <div className="table-buttons">
+          {currentPage > 1 && (
+            <Button
+              onClick={() => {
+                dispatch(setFilterOptions({ page: currentPage - 1 }));
+              }}
+              variant="contained"
+              className="table-button-prev"
+            >
+              Previous
+            </Button>
+          )}
+          {currentPage < totalPages && (
+            <Button
+              onClick={() => {
+                dispatch(setFilterOptions({ page: currentPage + 1 }));
+              }}
+              variant="contained"
+              className="table-button-next"
+            >
+              Next
+            </Button>
+          )}
         </div>
       </div>
     </>
@@ -139,17 +164,25 @@ const TableHeader = ({ headers }) => {
 
 const TableRow = ({ order, onClickButtonEdit }) => {
   const dispatch = useDispatch();
+  const { filters } = useSelector((state) => state.orders);
   const onClickButtonEditHandler = () => {
     dispatch(setCurrentOrder(order));
     onClickButtonEdit();
   };
+  const getOrdersByFilters = () => {
+    dispatch(getOrders(filters));
+  };
   const onClickDeleteOrder = () => {
     dispatch(deleteOrder({ orderId: order._id }));
-    dispatch(getOrders({}));
+    getOrdersByFilters();
   };
   const onClickComplete = () => {
-    dispatch(completeOrder({ orderId: order._id }));
-    dispatch(getOrders({}));
+    dispatch(toggleOrderStatus({ orderId: order._id }));
+    getOrdersByFilters();
+  };
+  const onCLickClose = () => {
+    dispatch(toggleOrderStatus({ orderId: order._id }));
+    getOrdersByFilters();
   };
   return (
     <tr>
@@ -162,11 +195,24 @@ const TableRow = ({ order, onClickButtonEdit }) => {
       <td>{order?.estimateTime}</td>
       <td className="order-icons">
         <EditIcon
-          style={{ color: "gray" }}
+          style={{ color: "gray", cursor: "pointer" }}
           onClick={onClickButtonEditHandler}
         ></EditIcon>
-        <CheckIcon onClick={onClickComplete} style={{ color: "#50C878" }} />
-        <DeleteIcon onClick={onClickDeleteOrder} style={{ color: "red" }} />
+        {order?.orderStatus === "open" ? (
+          <CheckIcon
+            onClick={onClickComplete}
+            style={{ color: "#50C878", cursor: "pointer" }}
+          />
+        ) : (
+          <CloseIcon
+            onClick={onCLickClose}
+            style={{ color: "#50C878", cursor: "pointer" }}
+          />
+        )}
+        <DeleteIcon
+          onClick={onClickDeleteOrder}
+          style={{ color: "red", cursor: "pointer" }}
+        />
       </td>
     </tr>
   );

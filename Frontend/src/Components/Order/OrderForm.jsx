@@ -1,9 +1,10 @@
 import { TextField } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createOrder } from "../../redux/actions/singleOrderAction";
 import { toast } from "react-toastify";
+import { clearMessage } from "../../redux/slices/authSlice";
 // import { getOrders } from "../../redux/actions/ordersAction";
 const OrderForm = () => {
   const [customerName, setCustomerName] = useState("");
@@ -13,14 +14,14 @@ const OrderForm = () => {
   const [estimateAmount, setEstimateAmount] = useState(0);
   const [estimateTime, setEstimateTime] = useState("");
   const dispatch = useDispatch();
-  // const resetState = () => {
-  //   setCustomerContact("");
-  //   setCustomerName("");
-  //   setEstimateAmount(0);
-  //   setEstimateTime("");
-  //   setModel("");
-  //   setProblemStatement("");
-  // };
+  const resetState = () => {
+    setCustomerContact("");
+    setCustomerName("");
+    setEstimateAmount(0);
+    setEstimateTime("");
+    setModel("");
+    setProblemStatement("");
+  };
   const createOrderHandler = () => {
     if (
       model === "" ||
@@ -44,7 +45,15 @@ const OrderForm = () => {
       })
     );
   };
-  const { loading } = useSelector((state) => state.singleOrder);
+
+  const { loading, message } = useSelector((state) => state.singleOrder);
+
+  useEffect(() => {
+    if (message) {
+      dispatch(clearMessage());
+      resetState();
+    }
+  }, [message, dispatch]);
 
   const numericPattern = /^[0-9]*$/; // Regular expression to match only numeric characters
 

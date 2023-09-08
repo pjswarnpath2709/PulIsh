@@ -146,20 +146,28 @@ export const getAllOrders = catchAsyncErrors(async (req, res) => {
     orderStatus,
   } = req.query;
   const apiFeatures = new OrderApiFeature({ operator: Order.find() });
-  const orders = await (
-    await (
-      await apiFeatures.search({ searchTerm })
-    )
-      .filterByOrderStatus({ orderStatus })
-      .filterByPaymentStatus({ paymentStatus: payment })
-      .filterByDate({ startDate, endDate })
-      .pagination({
-        currentPage: Number(page),
-        resultsPerPage: resultsPerPage ?? 20,
-      })
-  ).operator.populate("customer");
+  let orders = await (await apiFeatures.search({ searchTerm }))
+    .filterByOrderStatus({ orderStatus })
+    .filterByPaymentStatus({ paymentStatus: payment })
+    .filterByDate({ startDate, endDate }).operator;
+
+  const totalOrders = orders.length;
+
+  const totalPages = Math.ceil(totalOrders / resultsPerPage);
+
+  orders = await (
+    await apiFeatures.pagination({
+      resultsPerPage: resultsPerPage ?? 10,
+      currentPage: page,
+    })
+  ).operator
+    .clone()
+    .sort({ createdAt: -1 })
+    .populate("customer");
+
   res.status(201).json({
-    totalOrders: orders.length,
+    totalOrders,
+    totalPages,
     currentPage: page ?? 1,
     orders,
     success: true,

@@ -45,16 +45,16 @@ const singleOrderSlice = createSlice({
     },
     deleteOrderFail: (state, action) => {
       state.loading = false;
-      state.error = action.payload
+      state.error = action.payload;
     },
-    completeOrderRequest: (state) => {
+    toggleOrderStatusRequest: (state) => {
       state.loading = true;
     },
-    completeOrderSuccess: (state, action) => {
+    toggleOrderStatusSuccess: (state, action) => {
       state.loading = false;
       state.message = action.payload.message;
     },
-    completeOrderFail: (state, action) => {
+    toggleOrderStatusFail: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
@@ -80,9 +80,9 @@ export const {
   deleteOrderRequest,
   deleteOrderSuccess,
   deleteOrderFail,
-  completeOrderRequest,
-  completeOrderSuccess,
-  completeOrderFail,
+  toggleOrderStatusFail,
+  toggleOrderStatusRequest,
+  toggleOrderStatusSuccess,
   clearError,
   clearMessage,
   clearOrder,

@@ -28,12 +28,14 @@ app.use(cors(corsOptions));
 import user from "./routes/user.js";
 import order from "./routes/order.js";
 import customer from "./routes/customer.js";
+import others from "./routes/others.js";
 import errorHandler from "./middlewares/errorHandler.js";
 
 //using routes
 app.use("/api/v1", user);
 app.use("/api/v1", order);
 app.use("/api/v1", customer);
+app.use("/api/v1", others);
 
 // error handler middleware
 app.use(errorHandler);

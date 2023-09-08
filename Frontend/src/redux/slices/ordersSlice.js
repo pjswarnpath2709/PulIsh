@@ -2,6 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   orders: [],
+  currentPage: 0,
+  totalOrders: 0,
+  totalPages: 0,
   loading: false,
   error: null,
   filters: {
@@ -27,7 +30,10 @@ const ordersSlice = createSlice({
     },
     getOrdersSuccess: (state, action) => {
       state.loading = false;
-      state.orders = action.payload;
+      state.orders = action.payload.orders;
+      state.currentPage = Number(action.payload.currentPage);
+      state.totalOrders = action.payload.totalOrders;
+      state.totalPages = action.payload.totalPages;
     },
     clearError: (state) => {
       state.error = null;

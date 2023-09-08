@@ -1,15 +1,15 @@
 import _ from "lodash";
 import pulishServer from "../api/pulishServer";
 import {
-  completeOrderFail,
-  completeOrderRequest,
-  completeOrderSuccess,
   createOrderFail,
   createOrderRequest,
   createOrderSuccess,
   editOrderFail,
   editOrderRequest,
   editOrderSuccess,
+  toggleOrderStatusFail,
+  toggleOrderStatusRequest,
+  toggleOrderStatusSuccess,
 } from "../slices/singleOrderSlice";
 import { deleteOrderFail, deleteOrderRequest, deleteOrderSuccess } from "../slices/singleOrderSlice";
 export const createOrder =
@@ -104,17 +104,17 @@ export const deleteOrder = ({ orderId }) => async (dispatch) => {
   }
 }
 
-export const completeOrder = ({ orderId }) => async (dispatch) => {
+export const toggleOrderStatus = ({ orderId }) => async (dispatch) => {
   try {
-    dispatch(completeOrderRequest());
+    dispatch(toggleOrderStatusRequest());
     const { data } = await pulishServer.put(`/order/orderstatus/${orderId}`, {}, {
       headers: {
         "Content-Type": "application/json",
       },
       withCredentials: true,
     })
-    dispatch(completeOrderSuccess(data));
+    dispatch(toggleOrderStatusSuccess(data));
   } catch (err) {
-    dispatch(completeOrderFail(err.response.data.message));
+    dispatch(toggleOrderStatusFail(err.response.data.message));
   }
 }

@@ -14,19 +14,21 @@ class OrderApiFeature {
     if (isMissing(searchTerm)) {
       return this;
     }
-    this.operator = this.operator.find({
-      $or: [
-        { model: regex },
-        { problemStatement: regex },
-        {
-          customer: {
-            $in: await Customer.find({
-              $or: [{ name: regex }, { contactNumber: regex }],
-            }).select("_id"),
+    this.operator = this.operator
+      .find({
+        $or: [
+          { model: regex },
+          { problemStatement: regex },
+          {
+            customer: {
+              $in: await Customer.find({
+                $or: [{ name: regex }, { contactNumber: regex }],
+              }).select("_id"),
+            },
           },
-        },
-      ],
-    });
+        ],
+      })
+      .sort({ createdAt: -1 });
     return this;
   };
 
@@ -40,7 +42,9 @@ class OrderApiFeature {
         message: "Invalid Order Status",
         statusCode: 400,
       });
-    this.operator = this.operator.find({ orderStatus: orderStatus });
+    this.operator = this.operator
+      .find({ orderStatus: orderStatus })
+      .sort({ createdAt: -1 });
     return this;
   };
 
@@ -54,7 +58,9 @@ class OrderApiFeature {
         message: "Invalid Payment Status",
         statusCode: 400,
       });
-    this.operator = this.operator.find({ payment: paymentStatus });
+    this.operator = this.operator
+      .find({ payment: paymentStatus })
+      .sort({ createdAt: -1 });
     return this;
   };
 
