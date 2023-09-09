@@ -7,7 +7,7 @@ import { isEmailValid, isMissing } from "../helper/checks.js";
 import crypto from "crypto";
 
 export const register = catchAsyncErrors(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, firm, address } = req.body;
   let user = await User.findOne({ email });
   if (user) {
     throw new CustomError({ message: "user already exists", statusCode: 401 });
@@ -23,6 +23,8 @@ export const register = catchAsyncErrors(async (req, res) => {
     name,
     email,
     password,
+    firm,
+    address,
   });
   const token = user.getJWTToken();
   const newUser = { ...user._doc };

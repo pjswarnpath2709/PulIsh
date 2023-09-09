@@ -34,7 +34,10 @@ export const getStats = catchAsyncErrors(async (req, res) => {
       },
     ]);
   };
-  const monthlySales = (await getMonthlySales())[0].totalAmount;
+  const monthlySalesArray = await getMonthlySales();
+  const monthlySales =
+    monthlySalesArray.length > 0 ? monthlySalesArray[0].totalAmount : 0;
+
   res.status(201).json({
     success: true,
     totalOrders,

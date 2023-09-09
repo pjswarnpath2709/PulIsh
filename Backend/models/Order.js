@@ -33,9 +33,19 @@ const OrderSchema = new mongoose.Schema(
       enum: [PaymentStatusEnum.pending, PaymentStatusEnum.done],
     },
     customer: {
+      name: {
+        type: String,
+        required: [true, "please enter customer's name"],
+      },
+      contactNumber: {
+        type: String,
+        required: [true, "please enter customer's number"],
+      },
+    },
+    user: {
       type: Schema.Types.ObjectId,
-      ref: "Customer",
-      required: true,
+      ref: "User",
+      required: [true, "please enter the user id"],
     },
     closedAt: Date,
   },

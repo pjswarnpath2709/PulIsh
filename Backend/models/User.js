@@ -20,6 +20,14 @@ const userSchema = new Schema(
       required: [true, "please enter your password"],
       minLength: [6, "Password must be of 6 characters"],
     },
+    firm: {
+      type: String,
+      required: [true, "Please Enter Your Business/Firm Name"],
+    },
+    address: {
+      type: String,
+      required: [true, "Please Enter Your Business Location"],
+    },
     subscribed: {
       type: Boolean,
       default: false,

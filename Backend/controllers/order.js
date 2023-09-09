@@ -1,5 +1,4 @@
 import { isMissing } from "../helper/checks.js";
-import Customer from "../models/Customer.js";
 import CustomError from "../utils/CustomError.js";
 import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import Order, { OrderStatusEnum, PaymentStatusEnum } from "../models/Order.js";
@@ -31,26 +30,19 @@ export const createOrder = catchAsyncErrors(async (req, res) => {
       statusCode: 400,
     });
   }
-
-  // check if the customer already present in the database
-  let customer = await Customer.findOne({
-    name: customerName,
-    contactNumber: customerContact,
-  });
-  if (!customer) {
-    // if the customer is not already present create one
-    customer = new Customer({
-      name: customerName,
-      contactNumber: customerContact,
-    });
-    await customer.save();
-  }
+  console.log(
+    "\x1b[35m",
+    `[${new Date(Date.now()).toLocaleString()}]`,
+    "👉👉👉 req.user :",
+    req.user
+  );
   const order = new Order({
     model,
     problemStatement,
     estimateAmount,
     estimateTime,
-    customer,
+    customer: { name: customerName, contactNumber: customerContact },
+    user: req.user._id,
   });
   await order.save();
   res.status(200).json({
@@ -81,7 +73,7 @@ export const updateOrder = catchAsyncErrors(async (req, res) => {
   if (isMissing(req.body))
     throw new CustomError({ message: "Nothing to update", statusCode: 400 });
   const { model, problemStatement, estimateAmount, estimateTime } = req.body;
-  const order = await Order.findById(orderId).populate("customer");
+  const order = await Order.findById(orderId);
   if (!order) {
     throw new CustomError({ message: "Invalid OrderId", statusCode: 400 });
   }
@@ -162,8 +154,7 @@ export const getAllOrders = catchAsyncErrors(async (req, res) => {
     })
   ).operator
     .clone()
-    .sort({ createdAt: -1 })
-    .populate("customer");
+    .sort({ createdAt: -1 });
 
   res.status(201).json({
     totalOrders,
