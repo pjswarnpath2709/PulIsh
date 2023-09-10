@@ -3,6 +3,8 @@ import CustomError from "../utils/CustomError.js";
 import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import Order, { OrderStatusEnum, PaymentStatusEnum } from "../models/Order.js";
 import OrderApiFeature from "../utils/OrderFeatures.js";
+import { sendNotifications } from "../utils/SendNotification.js";
+import User from "../models/User.js";
 
 export const createOrder = catchAsyncErrors(async (req, res) => {
   const {
@@ -30,12 +32,6 @@ export const createOrder = catchAsyncErrors(async (req, res) => {
       statusCode: 400,
     });
   }
-  console.log(
-    "\x1b[35m",
-    `[${new Date(Date.now()).toLocaleString()}]`,
-    "👉👉👉 req.user :",
-    req.user
-  );
   const order = new Order({
     model,
     problemStatement,
@@ -45,6 +41,12 @@ export const createOrder = catchAsyncErrors(async (req, res) => {
     user: req.user._id,
   });
   await order.save();
+  const user = await User.findById(req.user._id).select("+device_tokens");
+  await sendNotifications({
+    device_tokens: user.device_tokens,
+    text: `${order.model} has ${order.problemStatement}`,
+    title: "Order has been created",
+  });
   res.status(200).json({
     success: "true",
     order: order._doc,
@@ -137,7 +139,9 @@ export const getAllOrders = catchAsyncErrors(async (req, res) => {
     payment,
     orderStatus,
   } = req.query;
-  const apiFeatures = new OrderApiFeature({ operator: Order.find() });
+  const apiFeatures = new OrderApiFeature({
+    operator: Order.find({ user: req.user._id }),
+  });
   let orders = await (await apiFeatures.search({ searchTerm }))
     .filterByOrderStatus({ orderStatus })
     .filterByPaymentStatus({ paymentStatus: payment })

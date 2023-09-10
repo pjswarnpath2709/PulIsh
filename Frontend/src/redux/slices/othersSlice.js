@@ -31,6 +31,16 @@ const othersSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    subscribeToNotificationRequest: (state) => {
+      state.loading = true;
+    },
+    subscribeToNotificationSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload.message;
+    },
+    subscribeToNotificationFail: (state, action) => {
+      state.error = action.payload;
+    },
     clearMessage: (state) => {
       state.message = null;
     },
@@ -44,6 +54,9 @@ export const {
   getStatsRequest,
   getStatsSuccess,
   getStatsFail,
+  subscribeToNotificationFail,
+  subscribeToNotificationRequest,
+  subscribeToNotificationSuccess,
   clearError,
   clearMessage,
 } = othersSlice.actions;

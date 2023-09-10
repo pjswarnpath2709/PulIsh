@@ -19,12 +19,14 @@ import ChangePassword from "./Components/ChangePassword/ChangePassword";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import DashBoard from "./Components/DashBoard/DashBoard";
 import Order from "./Components/Order/Order";
+import Messaging from "./Components/Messaging/Messaging";
 
 function App() {
   const { isAuth, loading, error, message } = useSelector(
     (state) => state.auth
   );
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(loadUser());
   }, [dispatch]);
@@ -44,6 +46,7 @@ function App() {
 
   return (
     <>
+      <Messaging />
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />

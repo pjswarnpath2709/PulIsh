@@ -1,5 +1,6 @@
 import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import Order, { OrderStatusEnum } from "../models/Order.js";
+import User from "../models/User.js";
 
 export const getStats = catchAsyncErrors(async (req, res) => {
   const totalOrders = await Order.countDocuments();
@@ -47,3 +48,22 @@ export const getStats = catchAsyncErrors(async (req, res) => {
     message: "stats loaded!",
   });
 });
+
+export const subscribeUserForNotification = catchAsyncErrors(
+  async (req, res) => {
+    const { device_token } = req.body;
+    const user = await User.findById(req.user._id).select("device_tokens");
+    if (
+      user.device_tokens.find((token) => {
+        return token === device_token;
+      }) === undefined
+    ) {
+      user.device_tokens.push(device_token);
+    }
+    await user.save();
+    res.status(201).json({
+      message: "device registered for notifications",
+      success: true,
+    });
+  }
+);

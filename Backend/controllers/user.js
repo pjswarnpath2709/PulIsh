@@ -45,6 +45,18 @@ export const login = catchAsyncErrors(async (req, res) => {
       statusCode: 401,
     });
   }
+  console.log(
+    "\x1b[35m",
+    `[${new Date(Date.now()).toLocaleString()}]`,
+    "👉👉👉 email :",
+    email
+  );
+  console.log(
+    "\x1b[35m",
+    `[${new Date(Date.now()).toLocaleString()}]`,
+    "👉👉👉 password :",
+    password
+  );
   const isMatch = await user.comparePassword(password);
   if (!isMatch) {
     throw new CustomError({
