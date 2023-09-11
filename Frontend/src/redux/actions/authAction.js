@@ -15,13 +15,13 @@ import {
 import pulishServer from "../api/pulishServer";
 
 export const registerUser =
-  ({ name, email, password }) =>
+  ({ name, email, password, firm, address }) =>
   async (dispatch) => {
     try {
       dispatch(registerRequest());
       const { data } = await pulishServer.post(
         "/register",
-        { name, email, password },
+        { name, email, password, firm, address },
         {
           headers: {
             "Content-Type": "application/json",

@@ -1,5 +1,5 @@
 import { isMissing } from "../helper/checks.js";
-import Customer from "../models/Customer.js";
+import FuzzySearch from "fuzzy-search";
 import { OrderStatusEnum, PaymentStatusEnum } from "../models/Order.js";
 import CustomError from "./CustomError.js";
 
@@ -10,25 +10,32 @@ class OrderApiFeature {
 
   search = async ({ searchTerm }) => {
     if (typeof searchTerm === "string" && searchTerm.trim() === "") return this;
-    const regex = new RegExp(searchTerm, "i");
+
     if (isMissing(searchTerm)) {
       return this;
     }
+    const allOrders = await this.operator.clone().exec(); // Clone the original query and execute it
+
+    // Create a new instance of the fuzzy searcher
+    const searcher = new FuzzySearch(
+      allOrders,
+      ["model", "problemStatement", "customer.name", "customer.contactNumber"],
+      {
+        caseSensitive: false, // Make the search case-insensitive
+      }
+    );
+
+    // Search for the given term
+    const results = searcher.search(searchTerm);
+
+    // Convert the results to an array of order IDs
+    const orderIds = results.map((result) => result._id);
+
+    // Modify the original query to filter by the found order IDs
     this.operator = this.operator
-      .find({
-        $or: [
-          { model: regex },
-          { problemStatement: regex },
-          {
-            customer: {
-              $in: await Customer.find({
-                $or: [{ name: regex }, { contactNumber: regex }],
-              }).select("_id"),
-            },
-          },
-        ],
-      })
+      .find({ _id: { $in: orderIds } })
       .sort({ createdAt: -1 });
+
     return this;
   };
 

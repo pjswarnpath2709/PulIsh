@@ -19,11 +19,25 @@ const userSchema = new Schema(
       type: String,
       required: [true, "please enter your password"],
       minLength: [6, "Password must be of 6 characters"],
+      select: false,
+    },
+    firm: {
+      type: String,
+      required: [true, "Please Enter Your Business/Firm Name"],
+    },
+    address: {
+      type: String,
+      required: [true, "Please Enter Your Business Location"],
     },
     subscribed: {
       type: Boolean,
       default: false,
       required: true,
+    },
+    device_tokens: {
+      type: [String],
+      default: [],
+      select: false,
     },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
@@ -45,7 +59,12 @@ userSchema.methods.getJWTToken = function () {
   });
 };
 userSchema.methods.comparePassword = async function (providedPassword) {
-  return await bcrypt.compare(providedPassword, this.password);
+  // Include the 'password' field in the result when querying the document
+  const user = await this.model("User").findById(this._id).select("+password");
+  if (!user) {
+    throw new Error("User not found");
+  }
+  return await bcrypt.compare(providedPassword, user.password);
 };
 
 userSchema.methods.getResetToken = async function () {

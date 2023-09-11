@@ -1,8 +1,13 @@
 const errorHandler = (err, req, res, next) => {
   err.statusCode = err.statusCode ?? 500;
   err.message = err.message ?? "Internal server error";
-  const currentDate = new Date(Date.now()).toLocaleString();
-  console.log("\x1b[33m", `[ ${currentDate} ] 😤😫🤯 :`, err);
+
+  console.log(
+    "\x1b[33m",
+    `[${new Date(Date.now()).toLocaleString()}]`,
+    "😤😫🤯 :",
+    err
+  );
   res.status(err.statusCode).json({
     message: err.message,
     statusCode: err.statusCode,
