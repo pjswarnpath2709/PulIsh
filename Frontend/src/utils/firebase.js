@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getMessaging } from "firebase/messaging";
+import { getMessaging, onMessage } from "firebase/messaging";
+
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -17,5 +18,10 @@ const firebaseConfig = {
 export const firebaseApp = initializeApp(firebaseConfig);
 export const firebaseMessaging = getMessaging(firebaseApp);
 
-
-
+export const onMessageListener  = async () => {
+  new Promise((resolve) => {
+    onMessage(firebaseMessaging, (payload) => {
+      resolve(payload);
+    });
+  });
+};

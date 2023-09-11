@@ -12,12 +12,9 @@ export const sendNotifications = async ({ device_tokens, title, text }) => {
   };
   try {
     const ans = await getMessaging().sendEachForMulticast(message);
-    console.log(
-      "\x1b[35m",
-      `[${new Date(Date.now()).toLocaleString()}]`,
-      "👉👉👉 ans :",
-      ans
-    );
+    ans.responses.map((response) => {
+      console.log(response);
+    });
   } catch (err) {
     throw new CustomError({
       message: err.message,

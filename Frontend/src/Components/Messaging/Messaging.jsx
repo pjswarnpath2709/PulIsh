@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { subscribeToNotifications } from "../../redux/actions/othersActions";
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { onMessageListener } from "../../utils/firebase";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCvPlAdwxyuYfHp3cKAPS2Y1Nlx9CYhD_Y",
@@ -15,12 +16,10 @@ const firebaseConfig = {
 
 const Messaging = () => {
   const dispatch = useDispatch();
-
+  const app = initializeApp(firebaseConfig);
+  const messaging = getMessaging(app);
   useEffect(() => {
     const initializeFirebaseApp = async () => {
-      const app = initializeApp(firebaseConfig);
-      const messaging = getMessaging(app);
-
       try {
         const permission = await Notification.requestPermission();
         if (permission === "granted") {
@@ -36,16 +35,22 @@ const Messaging = () => {
       } catch (error) {
         console.error("Error requesting notification permission:", error);
       }
-
-      onMessage(messaging, (payload) => {
-        console.log("Message received in foreground:", payload);
-        // You can dispatch an action or handle the incoming message as needed.
-      });
     };
 
     initializeFirebaseApp();
-  }, [dispatch]);
-
+    const unsubscribe = onMessageListener().then((payload) => {
+      console.log(payload, "payload");
+    });
+    return () => {
+      unsubscribe.catch((err) => {
+        console.error(err);
+      });
+    };
+  }, []);
+  onMessage(messaging, (payload) => {
+    console.log("Message received in foreground:", payload);
+    // You can dispatch an action or handle the incoming message as needed.
+  });
   return <></>;
 };
 
