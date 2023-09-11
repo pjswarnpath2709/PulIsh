@@ -1,22 +1,20 @@
 import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import Order, { OrderStatusEnum } from "../models/Order.js";
 import User from "../models/User.js";
+import { mongoose } from "mongoose";
 
 export const getStats = catchAsyncErrors(async (req, res) => {
-  const totalOrders = await Order.countDocuments();
+  const totalOrders = await Order.find({ user: req.user._id }).countDocuments();
   const totalPendingOrders = await Order.find({
+    user: req.user._id,
     orderStatus: OrderStatusEnum.open,
   }).countDocuments();
   const totalCompleteOrders = totalOrders - totalPendingOrders;
 
-  const getMonthlySales = async () => {
+  const getMonthlySales = async (userId) => {
     const today = new Date();
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-    const lastDayOfMonth = new Date(
-      today.getFullYear(),
-      today.getMonth() + 1,
-      0
-    );
+    const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
     return await Order.aggregate([
       {
         $match: {
@@ -25,6 +23,7 @@ export const getStats = catchAsyncErrors(async (req, res) => {
             $lte: lastDayOfMonth,
           },
           orderStatus: OrderStatusEnum.closed,
+          user: new mongoose.Types.ObjectId(userId), // Assuming userId is a string
         },
       },
       {
@@ -35,7 +34,7 @@ export const getStats = catchAsyncErrors(async (req, res) => {
       },
     ]);
   };
-  const monthlySalesArray = await getMonthlySales();
+  const monthlySalesArray = await getMonthlySales(req.user._id);
   const monthlySales =
     monthlySalesArray.length > 0 ? monthlySalesArray[0].totalAmount : 0;
 
