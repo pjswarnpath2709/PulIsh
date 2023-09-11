@@ -1,6 +1,6 @@
 import "./Register.css";
-import { TextField, Typography } from "@mui/material";
-import loginImg from "../../images/Login.svg";
+import { TextField } from "@mui/material";
+import loginImg from "../../images/login.svg";
 import { useState } from "react";
 import { registerUser } from "../../redux/actions/authAction";
 import { useDispatch } from "react-redux";
