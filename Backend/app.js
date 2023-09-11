@@ -15,8 +15,10 @@ app.use(express.urlencoded({ limit: "100mb", extended: true }));
 app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 
+console.log(process.env.FRONTEND_URL);
+
 const corsOptions = {
-  origin: `${process.env.FRONTEND_URL}`,
+  origin: [`${process.env.FRONTEND_URL}`],
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
   methods: ["GET", "POST", "PUT", "DELETE"],
