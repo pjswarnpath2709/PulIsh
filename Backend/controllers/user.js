@@ -3,7 +3,6 @@ import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import CustomError from "../utils/CustomError.js";
 import cookieOptions from "../constants/cookieOptions.js";
 import sendEmail from "../utils/SendEmail.js";
-import { isEmailValid, isMissing } from "../helper/checks.js";
 import crypto from "crypto";
 
 export const register = catchAsyncErrors(async (req, res) => {
@@ -11,13 +10,6 @@ export const register = catchAsyncErrors(async (req, res) => {
   let user = await User.findOne({ email });
   if (user) {
     throw new CustomError({ message: "user already exists", statusCode: 401 });
-  }
-  const { valid } = await isEmailValid(email);
-  if (!valid) {
-    throw new CustomError({
-      message: `Invalid EmailId`,
-      statusCode: 400,
-    });
   }
   user = await User.create({
     name,
