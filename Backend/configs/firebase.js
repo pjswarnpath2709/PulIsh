@@ -4,7 +4,7 @@ import admin from "firebase-admin";
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
-const _dirname = path.dirname(_filename);
+const __dirname = path.dirname(__filename);
 
 export const readAndInitializeFirebase = async () => {
   try {
