@@ -11,10 +11,7 @@ export const sendNotifications = async ({ device_tokens, title, text }) => {
     tokens: device_tokens,
   };
   try {
-    const ans = await getMessaging().sendEachForMulticast(message);
-    ans.responses.map((response) => {
-      console.log(response);
-    });
+    await getMessaging().sendEachForMulticast(message);
   } catch (err) {
     throw new CustomError({
       message: err.message,
