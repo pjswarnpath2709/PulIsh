@@ -8,10 +8,27 @@ export const sendNotifications = async ({ device_tokens, title, text }) => {
       title: title,
       body: text,
     },
+    data: {
+      frontend_url: `${process.env.FRONTEND_URL}`,
+    },
+    webpush: {
+      fcmOptions: {
+        link: `${process.env.FRONTEND_URL}`,
+      },
+    },
     tokens: device_tokens,
   };
+  console.log(
+    "\x1b[35m",
+    `[${new Date(Date.now()).toLocaleString()}]`,
+    "👉👉👉 message :",
+    message
+  );
   try {
-    await getMessaging().sendEachForMulticast(message);
+    const ans = await getMessaging().sendEachForMulticast(message);
+    ans.responses.map((response) => {
+      console.log(response);
+    });
   } catch (err) {
     throw new CustomError({
       message: err.message,

@@ -4,6 +4,7 @@ import { subscribeToNotifications } from "../../redux/actions/othersActions";
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { onMessageListener } from "../../utils/firebase";
+import { toast } from "react-toastify";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCvPlAdwxyuYfHp3cKAPS2Y1Nlx9CYhD_Y",
@@ -48,8 +49,8 @@ const Messaging = () => {
     };
   }, []);
   onMessage(messaging, (payload) => {
-    console.log("Message received in foreground:", payload);
-    // You can dispatch an action or handle the incoming message as needed.
+    console.log(payload);
+    toast.info(payload.notification.title);
   });
   return <></>;
 };

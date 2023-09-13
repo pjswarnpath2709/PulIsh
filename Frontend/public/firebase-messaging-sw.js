@@ -26,6 +26,7 @@ messaging.onBackgroundMessage(async (payload) => {
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
+    data: payload.data,
   };
   await self.registration.showNotification(
     notificationTitle,
@@ -33,7 +34,7 @@ messaging.onBackgroundMessage(async (payload) => {
   );
 });
 
-self.addEventListener("notificationclick", (event) => {
-  console.log(event);
-  return event;
+self.addEventListener("notificationclick", function (event) {
+  event.notification.close(); // Close the notification
+  event.waitUntil(clients.openWindow(event.notification.data.frontend_url));
 });
