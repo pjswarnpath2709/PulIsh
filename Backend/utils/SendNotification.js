@@ -11,6 +11,14 @@ export const sendNotifications = async ({ device_tokens, title, text }) => {
     data: {
       frontend_url: `${process.env.FRONTEND_URL}`,
     },
+    android: {
+      notification: {
+        title: title,
+        body: text,
+        click_action: `${process.env.FRONTEND_URL}`,
+        notification_priority: "PRIORITY_HIGH",
+      },
+    },
     webpush: {
       fcmOptions: {
         link: `${process.env.FRONTEND_URL}`,
