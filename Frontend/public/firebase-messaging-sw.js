@@ -17,14 +17,7 @@ const config = {
 firebase.initializeApp(config);
 const messaging = firebase.messaging();
 
-console.log(
-  "\x1b[35m",
-  `[${new Date(Date.now()).toLocaleString()}]`,
-  "👉👉👉 messaging :",
-  firebase
-);
-
-messaging.setBackgroundMessageHandler((payload) => {
+messaging.setBackgroundMessageHandler(async (payload) => {
   console.log(
     "[firebase-messaging-sw.js] Received background message ",
     payload
