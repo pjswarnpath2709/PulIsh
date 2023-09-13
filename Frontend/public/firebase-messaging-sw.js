@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
-importScripts("https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js");
+importScripts("https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js");
 importScripts(
-  "https://www.gstatic.com/firebasejs/7.13.1/firebase-messaging.js"
+  "https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js"
 );
 
 // Your web app's Firebase configuration
@@ -17,23 +17,39 @@ const config = {
 firebase.initializeApp(config);
 const messaging = firebase.messaging();
 
-messaging.setBackgroundMessageHandler(async (payload) => {
+messaging.onBackgroundMessage((payload) => {
   console.log(
     "[firebase-messaging-sw.js] Received background message ",
     payload
   );
-
-  const notificationTitle = payload.data.title;
+  // Customize notification here
+  const notificationTitle = "Background Message Title";
   const notificationOptions = {
-    body: payload.data.body,
+    body: "Background Message body.",
     icon: "/firebase-logo.png",
   };
 
-  return self.registration.showNotification(
-    notificationTitle,
-    notificationOptions
-  );
+  self.registration.showNotification(notificationTitle, notificationOptions);
 });
+
+
+// messaging.setBackgroundMessageHandler(async (payload) => {
+//   console.log(
+//     "[firebase-messaging-sw.js] Received background message ",
+//     payload
+//   );
+
+//   const notificationTitle = payload.data.title;
+//   const notificationOptions = {
+//     body: payload.data.body,
+//     icon: "/firebase-logo.png",
+//   };
+
+//   return self.registration.showNotification(
+//     notificationTitle,
+//     notificationOptions
+//   );
+// });
 
 self.addEventListener("notificationclick", (event) => {
   console.log(event);
