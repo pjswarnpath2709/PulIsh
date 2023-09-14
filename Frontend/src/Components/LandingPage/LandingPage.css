@@ -10,7 +10,6 @@
 }
 
 .lp-nav {
-  width: 100%;
   height: 100px;
   display: flex;
   justify-content: space-between;
@@ -20,63 +19,94 @@
 .lp-logo {
   font-size: 2rem;
   text-decoration: none;
+  color: black;
+  font-weight: 600;
 }
 
-.lp-logo > span {
+.lp-logo>span {
   color: rgb(121, 109, 203);
 }
 
-.lp-menu > a {
-  text-decoration: none;
-  font-weight: bold;
-  color: black;
-  padding: 10px 20px;
-  position: relative;
-}
-
-.lp-mobile-menu {
+.lp-menu {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.lp-mobile-menu > a {
-  text-decoration: none;
-  font-weight: bold;
-  color: black;
-  padding: 10px 20px;
+.lp-menu li {
+  list-style: none;
+  padding: 0 20px;
   position: relative;
 }
 
-.lp-menu > a:before {
+.lp-menu a:before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 0%;
   height: 100%;
-  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  padding-bottom: .4rem;
   transition: 0.5s linear;
 }
 
-.lp-menu > a:hover:before {
+.lp-menu a:hover:before {
   width: 100%;
 }
 
-.nav-btn > a {
+.lp-menu li>a {
   text-decoration: none;
-  color: white;
-  padding: 10px 20px;
-  background-color: black;
-  border-radius: 8px;
-  white-space: nowrap;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: black;
 }
 
-.nav-btn > a:hover {
-  background: transparent;
-  font-weight: bold;
-  border: 2px solid black;
-  color: black;
-  transition: 0.5s linear;
+.mobile {
+  display: none;
+}
+
+.closeMenu {
+  display: none;
+}
+
+@media (max-width:727px) {
+
+  .lp-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: fixed;
+    top: -400px;
+    right: -400px;
+    width: 0;
+    background-color: white;
+    box-shadow: 0px 0px 5px rgb(0 0 0.1);
+    padding: 40px 0 0 10px;
+    transition: 0.3s ease-in-out;
+  }
+
+  .lp-menu.active {
+    width: 100%;
+    top: 0;
+    right: 0;
+    height: 100vh;
+  }
+
+  .lp-menu li {
+    margin-bottom: 25px;
+  }
+
+  .mobile {
+    display: block;
+  }
+
+  .closeMenu {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+  }
 }
 
 .hero {
@@ -186,18 +216,18 @@
   margin-bottom: 2.5rem;
 }
 
-.services-upper > div {
+.services-upper>div {
   width: 100%;
   margin-bottom: 1.5rem;
 }
 
 @media (min-width: 1024px) {
-  .services-upper > div {
+  .services-upper>div {
     width: 50%;
     margin-bottom: 0;
   }
 
-  .services-upper > p {
+  .services-upper>p {
     width: 50%;
   }
 }
@@ -221,33 +251,33 @@
   line-height: 1.75rem;
 }
 
-#services > .services-lower {
+#services>.services-lower {
   display: flex;
   flex-wrap: wrap;
 }
 
 @media (max-width: 786px) {
-  .services-lower > div {
+  .services-lower>div {
     width: 100%;
     padding: 1.5rem;
   }
 }
 
 @media (min-width: 786px) {
-  .services-lower > div {
+  .services-lower>div {
     width: 50%;
     padding: 1.5rem;
   }
 }
 
 @media (min-width: 1280px) {
-  .services-lower > div {
+  .services-lower>div {
     width: 25%;
     padding: 1.5rem;
   }
 }
 
-.services-lower > div > div {
+.services-lower>div>div {
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
@@ -299,7 +329,7 @@
   margin-right: auto;
 }
 
-.para > img {
+.para>img {
   width: 3rem;
 }
 
@@ -314,7 +344,7 @@
     width: 60%;
   }
 
-  .para > img {
+  .para>img {
     width: 4rem;
   }
 }
@@ -326,7 +356,7 @@
   color: rgb(100 116 139);
 }
 
-.para > h2 {
+.para>h2 {
   padding-top: 2rem;
   padding-bottom: 0.3rem;
   color: rgb(17 24 39);
@@ -366,24 +396,24 @@
   }
 }
 
-.about-us-left > img {
+.about-us-left>img {
   width: 100%;
   height: 100%;
 }
 
-.about-us-right > h2 {
+.about-us-right>h2 {
   font-size: 4rem;
   font-family: "roboto";
   padding-bottom: 0.3rem;
 }
 
 @media (max-width: 325px) {
-  .about-us-right > h2 {
+  .about-us-right>h2 {
     font-size: 3rem;
   }
 }
 
-.about-us-right > h3 {
+.about-us-right>h3 {
   font-size: 1.3rem;
   font-weight: 300;
   font-family: "roboto";
@@ -467,7 +497,7 @@
   width: 50%;
 }
 
-.contact-name > div {
+.contact-name>div {
   font-size: 1.2rem;
   font-weight: bold;
   line-height: 1.75rem;
@@ -475,7 +505,7 @@
   font-family: "roboto";
 }
 
-.contact-name > input {
+.contact-name>input {
   padding: 0.65rem 1rem;
   width: 100%;
   border: 1px solid #ccc;
@@ -485,7 +515,7 @@
   transition: border-color 0.3s ease;
 }
 
-.contact-name > input:focus {
+.contact-name>input:focus {
   border-color: #4f46e5;
 }
 
@@ -494,7 +524,7 @@
   width: 50%;
 }
 
-.contact-email > div {
+.contact-email>div {
   font-size: 1.2rem;
   font-weight: bold;
   line-height: 1.75rem;
@@ -502,7 +532,7 @@
   font-family: "roboto";
 }
 
-.contact-email > input {
+.contact-email>input {
   padding: 0.65rem 1rem;
   width: 100%;
   border: 1px solid #ccc;
@@ -512,7 +542,7 @@
   transition: border-color 0.3s ease;
 }
 
-.contact-email > input:focus {
+.contact-email>input:focus {
   border-color: #4f46e5;
 }
 
@@ -522,7 +552,7 @@
   padding: 0.5rem;
 }
 
-.contact-message > div {
+.contact-message>div {
   font-size: 1.2rem;
   font-weight: bold;
   line-height: 1.75rem;
@@ -530,7 +560,7 @@
   font-family: "roboto";
 }
 
-.contact-message > textarea {
+.contact-message>textarea {
   padding: 0.65rem 1rem;
   width: 100%;
   border: 1px solid #ccc;
@@ -545,7 +575,7 @@
   width: 100%;
 }
 
-.contact-btn > button {
+.contact-btn>button {
   display: flex;
   margin: 0 auto;
   color: white;
@@ -555,7 +585,7 @@
   border-radius: 4px;
 }
 
-.contact-btn > button:hover {
+.contact-btn>button:hover {
   background-color: rgb(111, 99, 185);
 }
 
@@ -600,7 +630,7 @@
   }
 }
 
-.footer-title > span {
+.footer-title>span {
   color: rgb(121, 109, 203);
 }
 
@@ -610,7 +640,7 @@
   margin-top: 1.2rem;
 }
 
-.footer-para > a {
+.footer-para>a {
   text-decoration: none;
   font-size: 1rem;
   color: #777;
@@ -629,7 +659,7 @@
   }
 }
 
-.footer-para > a {
+.footer-para>a {
   color: #777;
   margin-left: 0.2rem;
 }
@@ -638,6 +668,7 @@
   display: inline-flex;
   margin-top: 1.4rem;
   justify-content: center;
+  align-items: center;
 }
 
 @media (min-width: 640px) {
@@ -648,6 +679,6 @@
   }
 }
 
-.footer-socials > a {
+.footer-socials>a {
   margin-left: 1.5rem;
 }
