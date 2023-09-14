@@ -46,7 +46,7 @@ function Profile() {
           <div className="edit-profile-button-container">
             <Link
               style={{ textDecoration: "none" }}
-              to={"/changepassword"}
+              to={"/dashboard/changepassword"}
               className="edit-profile-button"
             >
               Change Password
@@ -55,7 +55,8 @@ function Profile() {
 
           <div className="join-date">
             <p className="join">
-              Joined on {moment(new Date(user?.createdAt)).format("MMMM,yy")}
+              Joined on{" "}
+              {moment(new Date(user?.createdAt)).format("D MMMM YYYY")}
             </p>
           </div>
         </div>

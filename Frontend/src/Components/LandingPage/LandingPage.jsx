@@ -1,7 +1,8 @@
 import "./LandingPage.css";
 import heroImg from "../../images/hero1.gif";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import { useEffect, useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import { useState } from "react";
 import service1 from "../../images/website_builder.svg";
 import service2 from "../../images/personal_website.svg";
 import service3 from "../../images/cms.svg";
@@ -11,44 +12,68 @@ import meta from "../../images/meta.svg";
 import x from "../../images/x.svg";
 import insta from "../../images/insta.svg";
 import linkedin from "../../images/linkedin.svg";
+import { Link } from "react-router-dom";
 
 const LandingPage = () => {
-  const [hamburger, setHamburger] = useState(window.innerWidth <= 640);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setHamburger(window.innerWidth <= 702);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const [showMenu, setShowMenu] = useState(false);
+  const toggle = () => {
+    setShowMenu(!showMenu);
+  };
+  function scrollToSection(event, sectionId) {
+    event.preventDefault(); // Prevent the default behavior (page refresh)
+    const section = document.getElementById(sectionId);
+    if (section) {
+      setShowMenu(!showMenu);
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  }
 
   return (
     <>
-      <header className="lp-header">
+      <header id="home" className="lp-header">
         <nav className="lp-nav">
-          <a href="" className="lp-logo">
+          <a href="" className={`lp-logo`}>
             Pul<span>Ish</span>
           </a>
-          {hamburger ? (
-            <MenuRoundedIcon className="hamBurger" />
-          ) : (
-            <>
-              <div className="lp-menu">
-                <a href="">Home</a>
-                <a href="">Services</a>
-                <a href="">About Us</a>
-                <a href="">Contact Us</a>
-              </div>
-              <div className="nav-btn">
-                <a href="">Get Started</a>
-              </div>
-            </>
-          )}
+          <div>
+            <ul className={`lp-menu ${showMenu ? "active" : ""}`}>
+              <li onClick={toggle} className="closeMenu">
+                {showMenu && <CloseIcon />}
+              </li>
+              <li>
+                <a href="#home" onClick={(e) => scrollToSection(e, "home")}>
+                  Home
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#services"
+                  onClick={(e) => scrollToSection(e, "services")}
+                >
+                  Services
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#about-us"
+                  onClick={(e) => scrollToSection(e, "about-us")}
+                >
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#contact-us"
+                  onClick={(e) => scrollToSection(e, "contact-us")}
+                >
+                  Contact Us
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div className="mobile" onClick={toggle}>
+            {!showMenu && <MenuRoundedIcon />}
+          </div>
         </nav>
         <section className="hero">
           <div className="left">
@@ -63,12 +88,12 @@ const LandingPage = () => {
                 marginBottom: "1rem",
               }}
             >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-              labore, perferendis neque consequatur temporibus a delectus amet
-              dolorem impedit provident
+              {
+                "Unleash your business's full potential with our innovative tools and expert guidance. Experience the future of small business management today and embark on a journey of efficiency, growth, and success."
+              }
             </p>
             <br />
-            <a href="">Order now</a>
+            <Link to={"/dashboard"}>Get Started</Link>
           </div>
           <div className="right">
             <img src={heroImg} alt="img.png" />
@@ -79,61 +104,53 @@ const LandingPage = () => {
         <div id="services">
           <div className="services-upper">
             <div>
-              <h1>Services Title</h1>
+              <h1>Services</h1>
               <div className="border"></div>
             </div>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor
-              facere, voluptatibus fugit sit a natus optio? Quis, fugit
-              pariatur. Laboriosam excepturi quos impedit eligendi! Fugit,
-              sequi. Veniam quos officiis, earum ipsa maxime itaque aperiam odio
-              suscipit repellat. Consequuntur corporis accusantium, aliquam
-              deleniti excepturi illo tenetur delectus quam provident
-              reprehenderit iure.
+              {
+                "At Pulish, we specialize in a range of services tailored for small businesses. From digital transformation to e-commerce optimization, our solutions are designed to drive results. We work closely with you to create customized strategies and implement cutting-edge technologies that streamline operations and boost growth. With our team of experts, your business is poised for success in the digital age."
+              }
             </p>
           </div>
           <div className="services-lower">
             <div>
               <div>
                 <img src={service1} alt="" />
-                <h3>SUBTITLE</h3>
-                <h2>Web-dev</h2>
+                <h3>Digital Transformation</h3>
+                <h2>Enhance Efficiency</h2>
                 <p className="service-description">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Lorem, ipsum.
+                  {"Elevate your operations with tech"}
                 </p>
               </div>
             </div>
             <div>
               <div>
                 <img src={service2} alt="" />
-                <h3>SUBTITLE</h3>
-                <h2>Web-dev</h2>
+                <h3>E-commerce Boost</h3>
+                <h2>Maximize Sales</h2>
                 <p className="service-description">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Lorem, ipsum.
+                  {"Optimize your online store for growth."}
                 </p>
               </div>
             </div>
             <div>
               <div>
                 <img src={service3} alt="" />
-                <h3>SUBTITLE</h3>
-                <h2>Web-dev</h2>
+                <h3>Data Insights</h3>
+                <h2>Informed Decisions</h2>
                 <p className="service-description">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Lorem, ipsum.
+                  {"Unlock the power of your data"}
                 </p>
               </div>
             </div>
             <div>
               <div>
                 <img src={service4} alt="" />
-                <h3>SUBTITLE</h3>
-                <h2>Web-dev</h2>
+                <h3>Customer Engagement</h3>
+                <h2>Delight Your Audience</h2>
                 <p className="service-description">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Lorem, ipsum.
+                  {"Build stronger customer relationships."}
                 </p>
               </div>
             </div>
@@ -146,8 +163,15 @@ const LandingPage = () => {
             <img src={quote} />
             <p className="main-para">
               {
-                "Edison bulb retro cloud bread echo park, helvetica stumptown taiyaki taxidermy 90's cronut +1 kinfolk. Single-origin coffee ennui shaman taiyaki vape DIY tote bag drinking vinegar cronut adaptogen squid fanny pack vaporware. Man bun next level coloring book skateboard four loko knausgaard. Kitsch keffiyeh master cleanse direct trade indigo juice before they sold out gentrify plaid gastropub normcore XOXO 90's pickled cindigo jean shorts. Slow-carb next level shoindigoitch ethical authentic, yr scenester sriracha forage franzen organic drinking vinegar"
-              }
+                "In order to make the future a reality, you need to believe in the impossible. At"
+              }{" "}
+              <em style={{ color: "black", fontWeight: "bold" }}>
+                Pul<span style={{ color: "rgb(121, 109, 203)" }}>Ish</span>
+              </em>{" "}
+              {
+                ", we share this vision. We're inspired by the relentless pursuit of innovation, the desire to push boundaries, and the courage to explore uncharted territories. Our mission is to empower businesses to embrace the future with confidence. We believe that with the right technology and the right mindset, anything is achievable. Together, we can redefine what's possible and shape a better"
+              }{" "}
+              tomorrow.
             </p>
             <div
               style={{
@@ -157,8 +181,7 @@ const LandingPage = () => {
               }}
               className="border"
             ></div>
-            <h2>HOLDEN CAULFIELD</h2>
-            <p style={{ color: "rgb(100 116 139)" }}>Senior Product Designer</p>
+            <h2>PulIsh</h2>
           </div>
         </div>
       </section>
@@ -170,22 +193,22 @@ const LandingPage = () => {
             </div>
             <div className="about-us-right">
               <h2>About Us</h2>
-              <h3>Your Subtitle</h3>
+              <h3>Our Story and Vision</h3>
               <ul>
                 <li>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi
-                  doloribus laudantium illum officia quam saepe sit, corporis
-                  voluptas obcaecati exercitationem.
+                  {
+                    "Briefly state the mission and purpose of your startup, highlighting the problem you aim to solve or the value you provide to customers."
+                  }
                 </li>
                 <li>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Provident, dolorum? Sequi ullam quis aperiam ipsam rerum
-                  recusandae dolorum. Odit, temporibus.
+                  {
+                    "Explain your unique approach or methodology in addressing challenges or delivering solutions."
+                  }
                 </li>
                 <li>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Provident, dolorum? Sequi ullam quis aperiam ipsam rerum
-                  recusandae dolorum. Odit, temporibus.
+                  {
+                    "Introduce your core team members, emphasizing their expertise and commitment to your mission."
+                  }
                 </li>
               </ul>
             </div>
@@ -198,8 +221,9 @@ const LandingPage = () => {
             <div className="contact-us-upper">
               <h1>Contact Us</h1>
               <p>
-                Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
-                gentrify.
+                {
+                  "Reach out and let's connect. We're here to assist you and explore collaboration opportunities. Your inquiries are important to us."
+                }
               </p>
             </div>
             <div className="contact-us-lower">

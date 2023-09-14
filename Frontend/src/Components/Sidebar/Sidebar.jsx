@@ -16,9 +16,16 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
-  const dispatch = useDispatch();
-  const handleLogout = (e) => {
+  const confirmLogout = (e) => {
     e.preventDefault();
+
+    const logoutYes = window.confirm("do you really want to leave this site");
+    if (logoutYes) {
+      handleLogout();
+    }
+  };
+  const dispatch = useDispatch();
+  const handleLogout = () => {
     dispatch(logoutUser());
   };
   const menuItem = [
@@ -74,7 +81,7 @@ const Sidebar = () => {
         <div
           className="sidebar-link"
           style={{ cursor: "pointer" }}
-          onClick={handleLogout}
+          onClick={confirmLogout}
         >
           <LogoutIcon />
           <div className="sidebar-link_text">Logout</div>
